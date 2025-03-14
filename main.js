@@ -70,7 +70,7 @@ const timeZones = {
   delusions: "Europe/London",
   engineerrunner: "Europe/London",
   mybearworld: "Europe/Berlin",
-  noodles: "-06:00",
+  noodles: "-05:00",
   notfenixio: "Europe/Madrid",
   pix: "America/Detroit",
   pkmnq: "+08:00",
