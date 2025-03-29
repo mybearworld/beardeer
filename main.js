@@ -1083,6 +1083,11 @@ const BOTS = [
     showIf: () => ulist.includes("h"),
     prefix: "@h ",
     commands: ["elp", "quote", "cat", "death", "math ", "kill ", "balance", "labor", "reverselabor", "shop", "buy "],
+  },
+  {
+    showIf: () => ulist.includes("sb4bot"),
+    prefix: "@sb4bot ",
+    commands: ["help", "balance", "notify ", "reversework", "rps ", "rng ", "wawameter ", "work"],
   }
 ]
 function determineBotSuggestions(el) {
