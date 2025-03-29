@@ -1077,7 +1077,7 @@ const BOTS = [
   {
     showIf: () => ulist.includes("bot"),
     prefix: "/",
-    commands: ["help", "ping", "whoami", "dice", "expose ", "grrr", "me", "orange", "work", "fish", "about", "gold", "glungus", "thesoupiscoldandthesaladishot"],
+    commands: ["help", "ping", "whoami", "dice", "expose ", "grrr", "me", "orange", "work", "fish", "about", "golf", "glungus", "thesoupiscoldandthesaladishot"],
   },
   {
     showIf: () => ulist.includes("h"),
