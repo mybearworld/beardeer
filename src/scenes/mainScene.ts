@@ -66,13 +66,14 @@ elements.buttonPost.addEventListener("click", () => {
 });
 
 let replies: string[] = [];
+let attachments: string[] = [];
 const sendPost = async () => {
   const response = await send(
     {
       command: "post",
       content: elements.msg.value,
       replies,
-      attachments: [],
+      attachments,
     },
     z.object({}),
   );
@@ -89,16 +90,27 @@ const resizePostBox = () => {
   });
 };
 const updateDetails = () => {
-  if (replies.length === 0) {
+  if (replies.length === 0 && attachments.length === 0) {
     elements.details.classList.add("hidden");
   } else {
     elements.details.classList.remove("hidden");
-    elements.detailsText.textContent = `${replies.length} repl${replies.length === 1 ? "y" : "ies"}`;
+    elements.detailsText.textContent = `${replies.length} repl${replies.length === 1 ? "y" : "ies"}, ${attachments.length} attachment${attachments.length === 1 ? "" : "s"}`;
   }
 };
+elements.buttonAttachment.addEventListener("click", () => {
+  if (attachments.length === 5) {
+    alert("You already have 5 attachments.");
+    return;
+  }
+  const url = prompt("Attachment URL...");
+  if (!url) return;
+  attachments.push(url);
+  updateDetails();
+});
 elements.detailsClear.addEventListener("click", () => clearDetails());
 const clearDetails = () => {
   replies = [];
+  attachments = [];
   elements.replies.innerHTML = "";
   updateDetails();
 };
