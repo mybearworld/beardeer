@@ -187,6 +187,13 @@ textarea {
   font-style: italic;
   color: var(--deer-reply);
 }
+.reply-span {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 .attachment img,
 .attachment video {
   max-height: 300px;

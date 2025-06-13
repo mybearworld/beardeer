@@ -64,6 +64,9 @@
             <span id="ms-show-guest-nav">
               <button id="ms-button-reload">Back to menu</button>
             </span>
+            <button id="ms-button-profile" class="hidden">
+              @<span id="ms-username"></span>
+            </button>
             <button id="ms-button-inbox" class="hidden">Inbox</button>
             <button id="ms-button-livechat" class="hidden">Livechat</button>
             <button id="ms-button-log-out" class="hidden">Log out</button>
@@ -128,10 +131,6 @@
               <div id="ms-replies"></div>
             </div>
           </div>
-          <div>
-            Hello! Your username is
-            <span id="ms-username"></span>.
-          </div>
           <div id="ms-posts">
             <template id="ms-post-template">
               <div class="post">
@@ -173,10 +172,12 @@
             </template>
             <template id="ms-reply-template">
               <button class="reply no-button-styles">
-                → <span class="reply-display-name"></span> (@<span
-                  class="reply-username"
-                ></span
-                >): <span class="reply-content"></span>
+                <span class="reply-span">
+                  → <span class="reply-display-name"></span> (@<span
+                    class="reply-username"
+                  ></span
+                  >): <span class="reply-content"></span>
+                </span>
               </button>
             </template>
           </div>

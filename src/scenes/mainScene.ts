@@ -1,6 +1,5 @@
 import { z } from "zod/v4";
 import {
-  openProfile,
   switchToProfile as switchToProfile,
   switchToScene,
 } from "../lib/scene";
@@ -10,9 +9,10 @@ import { startupInfo, initialUserInfo, listen, send } from "../lib/ws";
 
 const root = select("div", "#main-scene");
 const elements = {
-  username: select("span", "#ms-username", root),
   showGuestNav: select("span", "#ms-show-guest-nav", root),
   backToMenuButton: select("button", "#ms-button-reload", root),
+  buttonProfile: select("button", "#ms-button-profile", root),
+  username: select("span", "#ms-username", root),
   buttonInbox: select("button", "#ms-button-inbox", root),
   buttonLiveChat: select("button", "#ms-button-livechat", root),
   buttonLogOut: select("button", "#ms-button-log-out", root),
@@ -48,6 +48,10 @@ initialUserInfo.then((initialUserInfo) => {
   elements.username.textContent = initialUserInfo.username;
   elements.showGuestNav.classList.add("hidden");
   elements.makePost.classList.remove("hidden");
+  elements.buttonProfile.classList.remove("hidden");
+  elements.buttonProfile.addEventListener("click", () => {
+    switchToProfile(initialUserInfo.username);
+  });
   elements.buttonInbox.classList.remove("hidden");
   elements.buttonLiveChat.classList.remove("hidden");
   elements.buttonLogOut.classList.remove("hidden");
