@@ -9,6 +9,7 @@ const elements = {
   username: select("span", "#ms-username", root),
   showGuestNav: select("span", "#ms-show-guest-nav", root),
   backToMenuButton: select("button", "#ms-button-reload", root),
+  buttonInbox: select("button", "#ms-button-inbox", root),
   buttonLiveChat: select("button", "#ms-button-livechat", root),
   ulist: select("div", "#ms-ulist", root),
   makePost: select("div", "#ms-make-post", root),
@@ -42,6 +43,7 @@ initialUserInfo.then((initialUserInfo) => {
   elements.username.textContent = initialUserInfo.username;
   elements.showGuestNav.classList.add("hidden");
   elements.makePost.classList.remove("hidden");
+  elements.buttonInbox.classList.remove("hidden");
   elements.buttonLiveChat.classList.remove("hidden");
 });
 startupInfo.then((startupInfo) => {
@@ -55,6 +57,10 @@ startupInfo.then((startupInfo) => {
 
 elements.backToMenuButton.addEventListener("click", () => {
   switchToScene("register-login");
+});
+
+elements.buttonInbox.addEventListener("click", () => {
+  switchToScene("main-inbox");
 });
 
 let livechat = false;

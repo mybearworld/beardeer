@@ -44,3 +44,11 @@ export const ulistSchema = z.record(
   }),
 );
 export type Ulist = z.infer<typeof ulistSchema>;
+
+export const inboxPostSchema = z.object({
+  _id: z.string(),
+  created: z.number().transform((n) => new Date(n * 1000)),
+  content: z.string(),
+  author: z.string(),
+});
+export type InboxPost = z.infer<typeof inboxPostSchema>;
