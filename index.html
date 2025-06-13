@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" c />
+    <title>BearDeer</title>
+    <style id="theme"></style>
+    <style id="custom-css"></style>
+    <script type="module" crossorigin src="/assets/index-jluZ6U9B.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BwdsJtSl.css">
+  </head>
+  <body>
+    <div id="app">
+      <div class="scene">
+        <div id="register-login" class="hidden">
+          <div id="rl-button-row">
+            <button id="rl-t-login">Login</button>
+            <button id="rl-t-signup">Signup</button>
+            <button id="rl-t-guest">Guest</button>
+          </div>
+          <div id="rl-login-container">
+            <input
+              id="rl-username"
+              placeholder="Username..."
+              type="text"
+              maxlength="20"
+            />
+            <input id="rl-password" placeholder="Password..." type="password" />
+            <button id="rl-login-button">Log in</button>
+          </div>
+          <div id="rl-signup-container" class="hidden">
+            <input
+              id="rl-username-s"
+              autocomplete="off"
+              placeholder="Username..."
+              type="text"
+              maxlength="20"
+            />
+            <input
+              id="rl-password-s"
+              autocomplete="off"
+              placeholder="Password..."
+              type="password"
+            />
+            <input
+              id="rl-invitecode"
+              autocomplete="off"
+              placeholder="Invite code..."
+              type="text"
+              maxlength="16"
+            />
+            <button class="rl-button" id="rl-signup-button">Sign up</button>
+          </div>
+          <div id="rl-bottom-row">
+            <div>
+              Please ensure you have read the
+              <a
+                href="https://alpha.wasteof.money/users/cheesewhisk3rs/wall/684149ef390b5646e3daa087"
+                >ToS</a
+              >.
+            </div>
+            <button>Set a custom server URL</button>
+            <small id="rl-version"></small>
+          </div>
+        </div>
+        <div id="main-scene" class="hidden">
+          <div>
+            <span id="ms-show-guest-nav">
+              <button id="ms-button-reload">Back to menu</button>
+            </span>
+            <button id="ms-button-profile" class="hidden">
+              @<span id="ms-username"></span>
+            </button>
+            <button id="ms-button-inbox" class="hidden">Inbox</button>
+            <button id="ms-button-livechat" class="hidden">Livechat</button>
+            <button id="ms-button-go-to-user" class="hidden">@...</button>
+            <button id="ms-button-settings" class="hidden">Settings</button>
+            <button id="ms-button-moderation" class="hidden">Moderation</button>
+            <button id="ms-button-log-out" class="hidden">Log out</button>
+          </div>
+          <div id="ms-ulist"></div>
+          <div id="ms-make-post" class="hidden">
+            <div id="ms-post-box">
+              <div id="ms-do-not-the-spamming" class="hidden">
+                Do NOT the spamming.
+              </div>
+              <button id="ms-button-presets">MK8 Presets</button>
+              <button id="ms-button-attachment">URL...</button>
+              <div id="ms-msg-wrapper">
+                <textarea
+                  id="ms-msg"
+                  maxlength="2000"
+                  autocomplete="off"
+                  placeholder="What's on your mind?"
+                  type="text"
+                  rows="1"
+                ></textarea>
+                <div id="ms-suggestions"></div>
+              </div>
+              <span class="hidden" id="ms-presets">
+                <button>Hello!</button>
+                <button>Good luck!</button>
+                <button>Welcome!</button>
+                <button>Go easy on me!</button>
+                <button>I'll give it my best shot!</button>
+                <button>Shall we get started?</button>
+                <button>Let's wait for more players.</button>
+                <button>OK!</button>
+                <button>I'm a little nervous...</button>
+                <button>I'm excited!</button>
+                <button>I'm using tilt controls!</button>
+                <button>Hooray!</button>
+                <button>Good game!</button>
+                <button>That was fun!</button>
+                <button>Not fair!</button>
+                <button>One more time!</button>
+                <button>I'll get you next time!</button>
+                <button>This is my last game.</button>
+                <button>I'm outta here.</button>
+                <button>Thanks for playing!</button>
+                <button>Thank you!</button>
+                <button>Good night!</button>
+                <button>Bye!</button>
+              </span>
+              <button id="ms-button-post">Post</button>
+            </div>
+            <div id="ms-replies-wrapper">
+              <div id="ms-details" class="hidden">
+                <span id="ms-details-text"></span>
+                -
+                <button
+                  id="ms-details-clear"
+                  class="no-button-styles link-styles"
+                >
+                  Remove all
+                </button>
+              </div>
+              <div id="ms-replies"></div>
+            </div>
+          </div>
+          <div id="ms-posts">
+            <template id="ms-post-template">
+              <div class="post">
+                <div class="post-top">
+                  <button class="post-pfp no-button-styles">
+                    <img class="pfp" />
+                  </button>
+                  <div>
+                    <button class="post-author no-button-styles">
+                      <b class="post-display-name"></b> (<span class="mono"
+                        >@<span class="post-username"></span></span
+                      >)
+                    </button>
+                    <div class="post-top-second-part">
+                      <span class="post-date"></span>
+                      <span class="post-reply-button-area hidden">
+                        -
+                        <button
+                          class="post-reply-button no-button-styles link-styles"
+                        >
+                          Reply
+                        </button>
+                      </span>
+                      <span class="post-delete-button-area hidden">
+                        -
+                        <button
+                          class="post-delete-button no-button-styles link-styles"
+                        >
+                          Delete
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="post-replies"></div>
+                <div class="post-content"></div>
+                <div class="post-attachments"></div>
+              </div>
+            </template>
+            <template id="ms-reply-template">
+              <button class="reply no-button-styles">
+                <span class="reply-span">
+                  → <span class="reply-display-name"></span> (@<span
+                    class="reply-username"
+                  ></span
+                  >): <span class="reply-content"></span>
+                </span>
+              </button>
+            </template>
+          </div>
+          <div id="ml-posts"></div>
+        </div>
+        <div id="main-inbox" class="hidden">
+          <div>
+            <button id="mi-button-back">Go back</button>
+          </div>
+          <div id="mi-posts"></div>
+        </div>
+        <div id="user-display" class="hidden">
+          <div id="ud-row">
+            <button id="ud-button-back">Go back</button>
+          </div>
+          <iframe id="ud-iframe" src="./userIframe.html"></iframe>
+        </div>
+        <div id="main-config" class="hidden">
+          <div>
+            <button id="mc-button-back">Go back</button>
+          </div>
+          <div class="mc-container">
+            <h2 class="header-notop">Profile</h2>
+            <div>
+              <input
+                id="mc-display-name"
+                placeholder="Display name..."
+                autocomplete="off"
+                type="text"
+                maxlength="20"
+              />
+              <button id="mc-button-display-name">Set display name</button>
+            </div>
+            <div>
+              <input
+                id="mc-avatar"
+                placeholder="Avatar URL..."
+                autocomplete="off"
+                type="text"
+                maxlength="656"
+              />
+              <button id="mc-button-avatar">Set avatar URL</button>
+            </div>
+            <div>
+              <input
+                id="mc-banner"
+                placeholder="Banner URL..."
+                autocomplete="off"
+                type="text"
+                maxlength="656"
+              />
+              <button id="mc-button-banner">Set banner URL</button>
+            </div>
+            <div>
+              <textarea
+                class="big-textarea"
+                id="mc-css"
+                placeholder="Profile CSS..."
+                autocomplete="off"
+              ></textarea>
+              <button id="mc-button-css">Set CSS</button>
+            </div>
+            <div>
+              <textarea
+                class="big-textarea"
+                id="mc-bio"
+                placeholder="Bio..."
+                type="text"
+                autocomplete="off"
+                maxlength="512"
+              ></textarea>
+              <button id="mc-button-bio">Set bio</button>
+            </div>
+            <div>
+              <input
+                id="mc-lastfm"
+                placeholder="Last.fm..."
+                autocomplete="off"
+                type="text"
+                maxlength="72"
+              />
+              <button id="mc-button-lastfm">Set Last.fm</button>
+            </div>
+          </div>
+          <div class="mc-container">
+            <h2>Miscellaneous</h2>
+            <label>
+              <input type="checkbox" id="mc-enter-sends" />
+              Enter sends post
+            </label>
+          </div>
+          <div class="mc-container">
+            <h2>Theme</h2>
+            <div class="mc-theme-preview">
+              <div class="mc-preview-content">
+                <button>Button</button> <button disabled>Disabled</button><br />
+                <div class="mc-preview-post">
+                  <img
+                    src="https://deer.goog-search.eu.org/assets/icon256.png"
+                    class="pfp"
+                  />
+                  <span> Post example<br />Lorem ipsum, dolor sit amet.</span>
+                </div>
+              </div>
+            </div>
+            Selected theme: <span id="mc-selected-theme"></span>
+            <div id="mc-themes"></div>
+            <h3>Custom CSS</h3>
+            <textarea class="big-textarea" id="mc-custom-css"></textarea>
+          </div>
+          <div class="mc-container">
+            <h2>Account</h2>
+            <div>
+              <input type="password" id="mc-delete-account-password" />
+              <button id="mc-delete-account">Delete account</button>
+            </div>
+          </div>
+        </div>
+        <div id="main-moderation" class="hidden">
+          <div>
+            <button id="mm-button-back">Go back</button>
+          </div>
+          <div id="mm-flex">
+            <div class="mm-container">
+              <h2>Ban</h2>
+              <input type="text" placeholder="Username" id="mm-ban-username" />
+              <input type="datetime-local" id="mm-ban-date" />
+              <input type="text" placeholder="Reason" id="mm-ban-reason" />
+              <button id="mm-ban">Ban</button>
+            </div>
+            <div class="mm-container">
+              <h2>Invite codes</h2>
+              <button id="mm-generate-invite-code">Generate invite code</button>
+              <button id="mm-reset-invite-codes">Reset invite codes</button>
+            </div>
+            <div class="mm-container">
+              <h2>Forcekick</h2>
+              <input
+                type="text"
+                placeholder="Username"
+                id="mm-forcekick-username"
+              />
+              <button id="mm-forcekick">Kick</button>
+            </div>
+            <div class="mm-container">
+              <h2>Inbox</h2>
+              <input type="text" placeholder="Message" id="mm-inbox-message" />
+              <button id="mm-inbox">Post</button>
+            </div>
+            <div class="mm-container">
+              <h2>IPs</h2>
+              <input type="text" placeholder="Username" id="mm-ips-username" />
+              <button id="mm-ips">See IPs</button>
+            </div>
+            <div class="mm-container">
+              <h2>IP ban</h2>
+              <input type="text" placeholder="IP" id="mm-ipban-ip" />
+              <button id="mm-ipban">IP ban</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

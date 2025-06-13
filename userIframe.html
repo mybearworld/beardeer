@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style id="ud-custom-css"></style>
+    <link rel="stylesheet" crossorigin href="/assets/userIframe-Ca0s47bX.css">
+  </head>
+  <body>
+    <div style="height: 42px"></div>
+    <div class="scene" id="user-display">
+      <div id="ud-banner">
+        <div id="ud-info">
+          <img id="ud-avatar" class="pfp" src="assets/default.png" />
+          <span id="ud-display-name"></span> <span id="ud-d-tags"></span>
+          <br />
+          <span id="ud-username" class="mono"></span>
+        </div>
+      </div>
+      <small>Current time: <span id="ud-tz"></span></small><br />
+      <small>Account created at <span id="ud-created"></span></small><br />
+      <small id="ud-permissions"></small>
+      <!-- no br here!! -->
+      <small id="ud-special"></small><br />
+      <span id="ud-banned" class="hidden"
+        ><small id="ud-banned-span"></small><br
+      /></span>
+      <div class="flex gap">
+        <div class="flex-column" id="ud-bio-container">
+          <div class="title">Bio</div>
+          <span id="ud-bio">This user does not have a bio.</span>
+        </div>
+        <div class="flex-column" id="ud-lastfm-container">
+          <div class="title">LastFM</div>
+          <div id="ud-lastfm-wrapper">
+            <img
+              id="ud-lastfm-cover"
+              class="album-cover"
+              src="assets/default.png"
+            />
+            <span id="ud-lastfm-name"></span>
+            <br />
+            <span id="ud-lastfm-artist"></span>
+            <br />
+            <small id="ud-lastfm-album"></small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
