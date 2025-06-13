@@ -2,6 +2,7 @@ import { z } from "zod/v4";
 import { select } from "../lib/elements";
 import { onScene, switchToScene } from "../lib/scene";
 import { userSchema } from "../lib/schemas";
+import { getSetting, setSetting } from "../lib/settings";
 import { initialUserInfo, send } from "../lib/ws";
 
 const root = select("div", "#main-config");
@@ -19,6 +20,7 @@ const elements = {
   buttonBio: select("button", "#mc-button-bio", root),
   lastfm: select("input", "#mc-lastfm", root),
   buttonLastfm: select("button", "#mc-button-lastfm", root),
+  enterSends: select("input", "#mc-enter-sends", root),
 } as const;
 
 elements.buttonBack.addEventListener("click", () => {
@@ -26,6 +28,7 @@ elements.buttonBack.addEventListener("click", () => {
 });
 
 onScene("main-config", async () => {
+  elements.enterSends.checked = getSetting("enterSends");
   const username = (await initialUserInfo).username;
   const user = await send(
     { command: "get_user", username },
@@ -63,3 +66,7 @@ elements.buttonBio.addEventListener("click", () =>
 elements.buttonLastfm.addEventListener("click", () =>
   setProperty("lastfm", elements.lastfm),
 );
+
+elements.enterSends.addEventListener("input", () => {
+  setSetting("enterSends", elements.enterSends.checked);
+});

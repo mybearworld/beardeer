@@ -7,6 +7,7 @@ import { postSchema, ulistSchema, type Post, type Ulist } from "../lib/schemas";
 import { clone, select } from "../lib/elements";
 import { startupInfo, initialUserInfo, listen, send } from "../lib/ws";
 import { parseMarkdown } from "../lib/markdown";
+import { getSetting } from "../lib/settings";
 
 const root = select("div", "#main-scene");
 const elements = {
@@ -103,7 +104,7 @@ elements.buttonLiveChat.addEventListener("click", () => {
 
 elements.msg.addEventListener("keydown", (ev) => {
   resizePostBox();
-  if (ev.key === "Enter" && !ev.shiftKey) {
+  if (getSetting("enterSends") && ev.key === "Enter" && !ev.shiftKey) {
     ev.preventDefault();
     sendPost();
   }
