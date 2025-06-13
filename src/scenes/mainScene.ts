@@ -7,8 +7,9 @@ import { startupInfo, initialUserInfo, listen, send } from "../lib/ws";
 const root = select("div", "#main-scene");
 const elements = {
   username: select("span", "#ms-username", root),
-  showGuestNav: select("div", "#ms-show-guest-nav", root),
+  showGuestNav: select("span", "#ms-show-guest-nav", root),
   backToMenuButton: select("button", "#ms-button-reload", root),
+  buttonLiveChat: select("button", "#ms-button-livechat", root),
   ulist: select("div", "#ms-ulist", root),
   makePost: select("div", "#ms-make-post", root),
   doNotTheSpamming: select("div", "#ms-do-not-the-spamming", root),
@@ -25,6 +26,7 @@ const elements = {
   posts: select("div", "#ms-posts", root),
   postTemplate: select("template", "#ms-post-template", root),
   replyTemplate: select("template", "#ms-reply-template", root),
+  livechatPosts: select("div", "#ml-posts", root),
 } as const;
 
 const posts: Record<
@@ -40,6 +42,7 @@ initialUserInfo.then((initialUserInfo) => {
   elements.username.textContent = initialUserInfo.username;
   elements.showGuestNav.classList.add("hidden");
   elements.makePost.classList.remove("hidden");
+  elements.buttonLiveChat.classList.remove("hidden");
 });
 startupInfo.then((startupInfo) => {
   startupInfo.messages.forEach((post) => {
@@ -52,6 +55,14 @@ startupInfo.then((startupInfo) => {
 
 elements.backToMenuButton.addEventListener("click", () => {
   switchToScene("register-login");
+});
+
+let livechat = false;
+elements.buttonLiveChat.addEventListener("click", () => {
+  livechat = !livechat;
+  elements.buttonLiveChat.textContent = livechat ? "Home" : "Livechat";
+  elements.posts.classList.toggle("hidden", livechat);
+  elements.livechatPosts.classList.toggle("hidden", !livechat);
 });
 
 elements.msg.addEventListener("keydown", (ev) => {
@@ -82,6 +93,7 @@ const sendPost = async () => {
     {
       command: "post",
       content: elements.msg.value,
+      ...(livechat ? { chat: "livechat" } : {}),
       replies,
       attachments,
     },
@@ -241,11 +253,15 @@ listen(
   z.object({
     command: z.literal("new_post"),
     data: postSchema,
+    origin: z.literal("livechat").optional(),
   }),
   (packet) => {
     const element = postElement(packet.data);
     posts[packet.data._id] = { element, data: packet.data, replies: [] };
-    elements.posts.insertBefore(element, elements.posts.firstChild);
+    (packet.origin ?
+      elements.livechatPosts
+    : elements.posts
+    ).insertAdjacentElement("afterbegin", element);
   },
 );
 listen(
