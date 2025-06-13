@@ -218,3 +218,29 @@ textarea {
   width: 100vw;
   height: 100vh;
 }
+pre {
+  margin-block: 0;
+}
+pre > code {
+  display: block;
+}
+code {
+  overflow: auto;
+  background-color: #282c34;
+  color: #abb2bf;
+  padding: 4px;
+  border-radius: 4px;
+}
+blockquote {
+  margin-inline: 0;
+  margin-block: 0;
+  border-left: 2px solid currentcolor;
+  padding-left: 5px;
+}
+table {
+  border-collapse: collapse;
+}
+th, td {
+  border: 1px solid currentColor;
+  padding: 0.25rem 0.5rem;
+}
