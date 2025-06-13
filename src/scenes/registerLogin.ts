@@ -14,6 +14,10 @@ const elements = {
   loginUsername: select("input", `#rl-username`, root),
   loginPassword: select("input", `#rl-password`, root),
   loginButton: select("button", `#rl-login-button`, root),
+  signupUsername: select("input", "#rl-username-s", root),
+  signupPassword: select("input", "#rl-password-s", root),
+  signupInviteCode: select("input", "#rl-invitecode", root),
+  signupButton: select("button", `#rl-signup-button`, root),
 } as const;
 
 elements.tabLogin.addEventListener("click", () => {
@@ -43,6 +47,24 @@ elements.loginButton.addEventListener("click", async () => {
   if (!response) return;
   gotInitialUserInfo(response.token, response.user);
   switchToScene("main-scene");
+});
+elements.signupButton.addEventListener("click", async () => {
+  const response = await send(
+    {
+      command: "register",
+      username: elements.signupUsername.value,
+      password: elements.signupPassword.value,
+      invite_code: elements.signupInviteCode.value,
+      client: "BearDeer v2",
+    },
+    z.object({
+      token: z.string(),
+      user: userSchema,
+    }),
+  );
+  if (!response) return;
+  localStorage.setItem("beardeer:token", response.token);
+  location.reload();
 });
 
 const storedToken = localStorage.getItem("beardeer:token");
