@@ -3,6 +3,7 @@ import { select } from "../lib/elements";
 import { onScene, openProfile, switchToScene } from "../lib/scene";
 import { userSchema } from "../lib/schemas";
 import { send } from "../lib/ws";
+import { parseMarkdown } from "../lib/markdown";
 
 const root = select("div", "#user-display");
 const elements = {
@@ -85,8 +86,8 @@ onScene("user-display", async () => {
   } else {
     select("span", "#ud-banned", idocument).classList.add("hidden");
   }
-  select("span", "#ud-bio", idocument).textContent =
-    user.user.profile.bio || "This user does not have a bio.";
+  select("span", "#ud-bio", idocument).innerHTML =
+    parseMarkdown(user.user.profile.bio) || "This user does not have a bio.";
   if (user.user.profile.lastfm) {
     select("div", "#ud-lastfm-container", idocument).classList.add("hidden");
     var xhttp = new XMLHttpRequest();

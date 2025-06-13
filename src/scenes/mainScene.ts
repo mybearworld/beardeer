@@ -6,6 +6,7 @@ import {
 import { postSchema, ulistSchema, type Post, type Ulist } from "../lib/schemas";
 import { clone, select } from "../lib/elements";
 import { startupInfo, initialUserInfo, listen, send } from "../lib/ws";
+import { parseMarkdown } from "../lib/markdown";
 
 const root = select("div", "#main-scene");
 const elements = {
@@ -298,11 +299,14 @@ listen(
       return;
     }
     if (postElement.element) {
-      select("p", ".post-content", postElement.element).textContent =
-        packet.content;
+      select("div", ".post-content", postElement.element).innerHTML =
+        parseMarkdown(packet.content);
     }
     postElement.replies.forEach((reply) => {
-      select("span", ".reply-content", reply).textContent = packet.content;
+      select("span", ".reply-content", reply).innerHTML = parseMarkdown(
+        packet.content,
+        { inline: true },
+      );
     });
   },
 );
@@ -392,7 +396,9 @@ const postElement = (post: Post) => {
   });
   select("span", ".post-date", element).textContent =
     post.created.toLocaleString();
-  select("p", ".post-content", element).textContent = post.content;
+  select("div", ".post-content", element).innerHTML = parseMarkdown(
+    post.content,
+  );
   const repliesElement = select("div", ".post-replies", element);
   post.replies.forEach((reply) => {
     const replyElement = renderReply(reply);
@@ -480,7 +486,7 @@ const renderReply = (
   select("span", ".reply-username", replyElement).textContent =
     typeof reply.author === "string" ? reply.author : reply.author.username;
   const replyContent = select("span", ".reply-content", replyElement);
-  replyContent.textContent = reply.content;
+  replyContent.innerHTML = parseMarkdown(reply.content, { inline: true });
   replyElement.addEventListener("click", () => {
     posts[reply._id]?.element?.scrollIntoView({ behavior: "smooth" });
   });
