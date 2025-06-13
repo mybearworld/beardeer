@@ -11,6 +11,7 @@ const elements = {
   backToMenuButton: select("button", "#ms-button-reload", root),
   buttonInbox: select("button", "#ms-button-inbox", root),
   buttonLiveChat: select("button", "#ms-button-livechat", root),
+  buttonLogOut: select("button", "#ms-button-log-out", root),
   ulist: select("div", "#ms-ulist", root),
   makePost: select("div", "#ms-make-post", root),
   doNotTheSpamming: select("div", "#ms-do-not-the-spamming", root),
@@ -45,6 +46,7 @@ initialUserInfo.then((initialUserInfo) => {
   elements.makePost.classList.remove("hidden");
   elements.buttonInbox.classList.remove("hidden");
   elements.buttonLiveChat.classList.remove("hidden");
+  elements.buttonLogOut.classList.remove("hidden");
 });
 startupInfo.then((startupInfo) => {
   startupInfo.messages.forEach((post) => {
@@ -61,6 +63,11 @@ elements.backToMenuButton.addEventListener("click", () => {
 
 elements.buttonInbox.addEventListener("click", () => {
   switchToScene("main-inbox");
+});
+
+elements.buttonLogOut.addEventListener("click", () => {
+  localStorage.removeItem("beardeer:token");
+  location.reload();
 });
 
 let livechat = false;
