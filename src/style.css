@@ -39,8 +39,12 @@ body {
   font-family: monospace;
 }
 
-a {
+a,
+.link-styles {
   color: var(--deer-foreground);
+}
+.link-styles {
+  text-decoration: underline;
 }
 p {
   margin-block: 0;
@@ -110,9 +114,16 @@ textarea {
 #ms-ulist {
   font-size: smaller;
 }
-#ms-make-post > div {
+#ms-post-box {
   display: flex;
   gap: 0.5rem;
+}
+#ms-replies-wrapper {
+  text-align: center;
+}
+#ms-replies {
+  display: flex;
+  flex-direction: column;
 }
 #ms-msg-wrapper {
   flex: 1;
@@ -149,7 +160,7 @@ textarea {
   display: flex;
   flex-direction: column;
 }
-.post-date {
+.post-top-second-part {
   font-size: small;
 }
 .reply {

@@ -18,6 +18,10 @@ const elements = {
   suggestions: select("div", "#ms-suggestions", root),
   presets: select("span", "#ms-presets", root),
   buttonPost: select("button", "#ms-button-post", root),
+  details: select("div", "#ms-details", root),
+  detailsText: select("span", "#ms-details-text", root),
+  detailsClear: select("button", "#ms-details-clear", root),
+  replies: select("div", "#ms-replies", root),
   posts: select("div", "#ms-posts", root),
   postTemplate: select("template", "#ms-post-template", root),
   replyTemplate: select("template", "#ms-reply-template", root),
@@ -61,24 +65,42 @@ elements.buttonPost.addEventListener("click", () => {
   sendPost();
 });
 
+let replies: string[] = [];
 const sendPost = async () => {
-  await send(
+  const response = await send(
     {
       command: "post",
       content: elements.msg.value,
-      replies: [],
+      replies,
       attachments: [],
     },
     z.object({}),
   );
+  if (!response) return;
+  replies = [];
   elements.msg.value = "";
   resizePostBox();
+  clearDetails();
 };
 const resizePostBox = () => {
   requestAnimationFrame(() => {
     elements.msg.style.minHeight = "auto";
     elements.msg.style.minHeight = elements.msg.scrollHeight + "px";
   });
+};
+const updateDetails = () => {
+  if (replies.length === 0) {
+    elements.details.classList.add("hidden");
+  } else {
+    elements.details.classList.remove("hidden");
+    elements.detailsText.textContent = `${replies.length} repl${replies.length === 1 ? "y" : "ies"}`;
+  }
+};
+elements.detailsClear.addEventListener("click", () => clearDetails());
+const clearDetails = () => {
+  replies = [];
+  elements.replies.innerHTML = "";
+  updateDetails();
 };
 
 listen(
@@ -197,30 +219,47 @@ const postElement = (post: Post) => {
   select("span", ".post-date", element).textContent =
     post.created.toLocaleString();
   select("p", ".post-content", element).textContent = post.content;
-  const replies = select("div", ".post-replies", element);
+  const repliesElement = select("div", ".post-replies", element);
   post.replies.forEach((reply) => {
-    const replyElement = select(
-      "button",
-      ".reply",
-      clone(elements.replyTemplate),
-    );
-    select("span", ".reply-display-name", replyElement).textContent =
-      typeof reply.author === "string" ?
-        reply.author
-      : reply.author.display_name;
-    select("span", ".reply-username", replyElement).textContent =
-      typeof reply.author === "string" ? reply.author : reply.author.username;
-    const replyContent = select("span", ".reply-content", replyElement);
-    replyContent.textContent = reply.content;
+    const replyElement = renderReply(reply);
     if (posts[reply._id]) {
       posts[reply._id].replies.push(replyElement);
     } else {
       posts[reply._id] = { data: reply, replies: [replyElement] };
     }
-    replyElement.addEventListener("click", () => {
-      posts[reply._id]?.element?.scrollIntoView({ behavior: "smooth" });
-    });
-    replies.append(replyElement);
+    repliesElement.append(replyElement);
   });
+  select("button", ".post-reply-button", element).addEventListener(
+    "click",
+    () => {
+      if (replies.length === 5 || replies.some((reply) => reply === post._id)) {
+        return;
+      }
+      replies.push(post._id);
+      elements.replies.append(renderReply(post));
+      updateDetails();
+      elements.msg.focus();
+    },
+  );
   return element;
+};
+
+const renderReply = (
+  reply: Omit<Post, "author"> & { author: Post["author"] | string },
+) => {
+  const replyElement = select(
+    "button",
+    ".reply",
+    clone(elements.replyTemplate),
+  );
+  select("span", ".reply-display-name", replyElement).textContent =
+    typeof reply.author === "string" ? reply.author : reply.author.display_name;
+  select("span", ".reply-username", replyElement).textContent =
+    typeof reply.author === "string" ? reply.author : reply.author.username;
+  const replyContent = select("span", ".reply-content", replyElement);
+  replyContent.textContent = reply.content;
+  replyElement.addEventListener("click", () => {
+    posts[reply._id]?.element?.scrollIntoView({ behavior: "smooth" });
+  });
+  return replyElement;
 };
