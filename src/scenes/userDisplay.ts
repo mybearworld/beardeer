@@ -4,6 +4,7 @@ import { onScene, openProfile, switchToScene } from "../lib/scene";
 import { userSchema } from "../lib/schemas";
 import { send } from "../lib/ws";
 import { parseMarkdown } from "../lib/markdown";
+import { getSetting, themeStyles } from "../lib/settings";
 
 const root = select("div", "#user-display");
 const elements = {
@@ -45,6 +46,8 @@ onScene("user-display", async () => {
   }
   select("style", "#ud-custom-css", idocument).innerHTML =
     user.user.profile.css || "";
+  select("style", "#ud-theme", idocument).innerHTML =
+    themeStyles[getSetting("theme")];
   select("span", "#ud-d-tags", idocument).innerHTML = "";
   select("img", "#ud-avatar", idocument).src = user.user.avatar;
   select("span", "#ud-display-name", idocument).innerText =

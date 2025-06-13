@@ -13,7 +13,7 @@ const elements = {
   customCSS: select("style", "#custom-css"),
 } as const;
 
-const themesObject = {
+export const themeStyles = {
   Deer: deer,
   Helium: helium,
   Midnight: midnight,
@@ -23,8 +23,8 @@ const themesObject = {
   Souple: souple,
 } as const;
 export const themes = Object.keys(
-  themesObject,
-) as readonly (keyof typeof themesObject)[];
+  themeStyles,
+) as readonly (keyof typeof themeStyles)[];
 
 const settingsSchema = z.object({
   enterSends: z.boolean(),
@@ -59,12 +59,12 @@ export const setSetting = <TSetting extends Setting>(
   settings[setting] = value;
   localStorage.setItem("beardeer:settings", JSON.stringify(settings));
   if (setting === "theme") {
-    elements.theme.innerHTML = themesObject[value as Settings["theme"]];
+    elements.theme.innerHTML = themeStyles[value as Settings["theme"]];
   }
   if (setting === "customCSS") {
     elements.customCSS.innerHTML = value as Settings["customCSS"];
   }
 };
 
-elements.theme.innerHTML = themesObject[getSetting("theme")];
+elements.theme.innerHTML = themeStyles[getSetting("theme")];
 elements.customCSS.innerHTML = getSetting("customCSS");
