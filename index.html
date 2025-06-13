@@ -64,8 +64,73 @@
             <button id="ms-button-reload">Back to menu</button>
           </div>
           <div id="ms-ulist"></div>
-          Hello! Your username is
-          <span id="ms-username"></span>.
+          <div id="ms-make-post" class="hidden">
+            <div>
+              <div id="ms-do-not-the-spamming" class="hidden">
+                Do NOT the spamming.
+              </div>
+              <button id="ms-button-presets" onclick="updateStg('presets')">
+                MK8 Presets
+              </button>
+              <button id="ms-button-attachment">URL...</button>
+              <div id="ms-msg-wrapper">
+                <textarea
+                  id="ms-msg"
+                  maxlength="2000"
+                  oninput="textinput()"
+                  autocomplete="off"
+                  placeholder="What's on your mind?"
+                  type="text"
+                  rows="1"
+                ></textarea>
+                <div id="ms-suggestions"></div>
+              </div>
+              <span class="hidden" id="ms-presets">
+                <button onclick="sendPreset(this)">Hello!</button>
+                <button onclick="sendPreset(this)">Good luck!</button>
+                <button onclick="sendPreset(this)">Welcome!</button>
+                <button onclick="sendPreset(this)">Go easy on me!</button>
+                <button onclick="sendPreset(this)">
+                  I'll give it my best shot!
+                </button>
+                <button onclick="sendPreset(this)">
+                  Shall we get started?
+                </button>
+                <button onclick="sendPreset(this)">
+                  Let's wait for more players.
+                </button>
+                <button onclick="sendPreset(this)">OK!</button>
+                <button onclick="sendPreset(this)">
+                  I'm a little nervous...
+                </button>
+                <button onclick="sendPreset(this)">I'm excited!</button>
+                <button onclick="sendPreset(this)">
+                  I'm using tilt controls!
+                </button>
+                <button onclick="sendPreset(this)">Hooray!</button>
+                <button onclick="sendPreset(this)">Good game!</button>
+                <button onclick="sendPreset(this)">That was fun!</button>
+                <button onclick="sendPreset(this)">Not fair!</button>
+                <button onclick="sendPreset(this)">One more time!</button>
+                <button onclick="sendPreset(this)">
+                  I'll get you next time!
+                </button>
+                <button onclick="sendPreset(this)">
+                  This is my last game.
+                </button>
+                <button onclick="sendPreset(this)">I'm outta here.</button>
+                <button onclick="sendPreset(this)">Thanks for playing!</button>
+                <button onclick="sendPreset(this)">Thank you!</button>
+                <button onclick="sendPreset(this)">Good night!</button>
+                <button onclick="sendPreset(this)">Bye!</button>
+              </span>
+              <button id="ms-button-post" onclick="sendPost();">Post</button>
+            </div>
+          </div>
+          <div>
+            Hello! Your username is
+            <span id="ms-username"></span>.
+          </div>
           <div id="ms-posts">
             <template id="ms-post-template">
               <div class="post">

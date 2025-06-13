@@ -2,7 +2,7 @@ import { z } from "zod/v4";
 import { switchToScene } from "../lib/scene";
 import { postSchema, ulistSchema, type Post, type Ulist } from "../lib/schemas";
 import { clone, select } from "../lib/elements";
-import { startupInfo, initialUserInfo, listen } from "../lib/ws";
+import { startupInfo, initialUserInfo, listen, send } from "../lib/ws";
 
 const root = select("div", "#main-scene");
 const elements = {
@@ -10,6 +10,14 @@ const elements = {
   showGuestNav: select("div", "#ms-show-guest-nav", root),
   backToMenuButton: select("button", "#ms-button-reload", root),
   ulist: select("div", "#ms-ulist", root),
+  makePost: select("div", "#ms-make-post", root),
+  doNotTheSpamming: select("div", "#ms-do-not-the-spamming", root),
+  buttonPresets: select("button", "#ms-button-presets", root),
+  buttonAttachment: select("button", "#ms-button-attachment", root),
+  msg: select("textarea", "#ms-msg", root),
+  suggestions: select("div", "#ms-suggestions", root),
+  presets: select("span", "#ms-presets", root),
+  buttonPost: select("button", "#ms-button-post", root),
   posts: select("div", "#ms-posts", root),
   postTemplate: select("template", "#ms-post-template", root),
 } as const;
@@ -19,6 +27,7 @@ const posts: Record<string, { element: HTMLDivElement; data: Post }> = {};
 initialUserInfo.then((initialUserInfo) => {
   elements.username.textContent = initialUserInfo.username;
   elements.showGuestNav.classList.add("hidden");
+  elements.makePost.classList.remove("hidden");
 });
 startupInfo.then((startupInfo) => {
   startupInfo.messages.forEach((post) => {
@@ -32,6 +41,37 @@ startupInfo.then((startupInfo) => {
 elements.backToMenuButton.addEventListener("click", () => {
   switchToScene("register-login");
 });
+
+elements.msg.addEventListener("keydown", (ev) => {
+  resizePostBox();
+  if (ev.key === "Enter" && !ev.shiftKey) {
+    ev.preventDefault();
+    sendPost();
+  }
+});
+elements.buttonPost.addEventListener("click", () => {
+  sendPost();
+});
+
+const sendPost = async () => {
+  await send(
+    {
+      command: "post",
+      content: elements.msg.value,
+      replies: [],
+      attachments: [],
+    },
+    z.object({}),
+  );
+  elements.msg.value = "";
+  resizePostBox();
+};
+const resizePostBox = () => {
+  requestAnimationFrame(() => {
+    elements.msg.style.minHeight = "auto";
+    elements.msg.style.minHeight = elements.msg.scrollHeight + "px";
+  });
+};
 
 listen(
   z.object({
