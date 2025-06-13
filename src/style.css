@@ -117,3 +117,8 @@ input {
 .post-date {
   font-size: small;
 }
+.post-deletion-message {
+  font-style: italic;
+  font-size: smaller;
+  color: var(--deer-reply);
+}

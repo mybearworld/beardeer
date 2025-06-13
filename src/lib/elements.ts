@@ -1,7 +1,7 @@
 export const select = <H extends keyof HTMLElementTagNameMap>(
   elementName: H,
   query: string,
-  base?: HTMLElement | DocumentFragment
+  base?: Element | DocumentFragment
 ) => {
   const element = (base || document).querySelector(query);
   if (element === null) {
