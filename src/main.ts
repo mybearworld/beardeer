@@ -1,5 +1,4 @@
 import { switchToScene } from "./lib/scene";
-import "./style.css";
 import "./scenes/mainConfig";
 import "./scenes/mainInbox";
 import "./scenes/mainModeration";

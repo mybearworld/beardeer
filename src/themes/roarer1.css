@@ -129,7 +129,7 @@ a,
   width: 100%;
 }
 
-.reply.clickable {
+.post .reply {
   opacity: 40%;
   margin-bottom: 0.5rem;
 }
