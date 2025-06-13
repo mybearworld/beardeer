@@ -1,0 +1,30 @@
+@import "./themes/deer.css";
+
+@font-face {
+  font-family: "Noto Sans";
+  src: url("assets/notosans/NotoSans-VariableFont_wdth,wght.ttf");
+}
+@font-face {
+  font-family: "Noto Sans";
+  font-style: italic;
+  src: url("assets/notosans/NotoSans-Italic-VariableFont_wdth,wght.ttf");
+}
+@font-face {
+  font-family: "sitelen seli kiwen";
+  src: url("assets/sitelenselikiwen/sitelenselikiwenjuniko.ttf");
+  size-adjust: 130%;
+  unicode-range: U+F????;
+}
+@font-face {
+  font-family: "Noto Color Emoji";
+  src: url("assets/notocoloremoji/NotoColorEmoji-Regular-NoSVG.ttf");
+}
+
+body {
+  background-color: var(--deer-background);
+  color: var(--deer-foreground);
+  padding: 8px;
+  margin: 0;
+  font-family: "Noto Sans", sans-serif, serif, "Noto Color Emoji",
+    "sitelen seli kiwen";
+}

@@ -1,0 +1,158 @@
+@import url("https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+  --deer-background: #020617;
+
+  --deer-foreground: #cbd5e1;
+  --deer-reply: #cbd5e1;
+
+  --deer-button: #1e293b;
+  --deer-button-hover: #1e293b;
+  --deer-button-disabled: #1e293b;
+
+  --deer-error: #1e293b;
+
+  --deer-seperator: #cbd5e1;
+  --deer-horizontalrule: #cbd5e1;
+
+  --deer-image-border: #0000000;
+
+  --deer-container-background: #020617;
+  --deer-danger-background: #020617;
+}
+
+#error-bar,
+.mc-preview-error {
+  color: var(--deer-foreground);
+}
+
+body {
+  width: min(100%, 100ch);
+  margin: 0 auto;
+}
+body,
+button,
+input,
+textarea {
+  font-family: Asap, "Noto Color Emoji", "sitelen seli kiwen";
+}
+
+body::before {
+  text-align: center;
+  font-weight: bold;
+  display: block;
+  content: "BearDeer";
+  font-size: 1.875rem;
+}
+
+code,
+button,
+input,
+textarea,
+.post,
+.album-cover,
+#ud-lastfm-container,
+#ud-bio-container,
+.mc-container,
+#ms-danger-container,
+.mc-theme-preview,
+.mc-preview-post,
+.mc-preview-pfp,
+.mm-container {
+  border-radius: 0.75rem;
+}
+
+input,
+textarea {
+  background-color: transparent;
+  border: 2px solid var(--deer-button);
+}
+
+a,
+#nav button,
+#ms-userbox button,
+#ms-ulist > span {
+  color: #38bdf8;
+  text-decoration: underline;
+  padding: 0;
+  background: 0;
+  font-size: 1rem;
+}
+#ms-ulist > span > .client-icon {
+  display: none;
+}
+#nav,
+#ms-userbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0;
+}
+#ms-hide-guest-nav {
+  display: contents;
+}
+#nav .ms-seperator {
+  display: none;
+}
+#ms-userbox.hidden {
+  display: none;
+}
+.scene {
+  margin-top: 0px;
+}
+
+#ms-make-post > center {
+  display: flex;
+  text-align: center;
+  gap: 0.5ch;
+}
+.ms-replies-wrapper {
+  flex-direction: column;
+  gap: 0;
+}
+.ms-replies-wrapper br {
+  display: none;
+}
+#ms-replies:empty {
+  display: none;
+}
+#ms-replies .reply:last-child {
+  margin: 0;
+}
+
+#ms-msg-wrapper {
+  flex-grow: 1;
+}
+
+#ms-msg {
+  width: 100%;
+}
+
+.reply.clickable {
+  opacity: 40%;
+  margin-bottom: 0.5rem;
+}
+
+.post {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.post > br {
+  display: none;
+}
+hr {
+  display: none;
+}
+.post > span.clickable[onclick^="showUser"],
+.post > small {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+[id^="p-"][id*="-attachment"],
+[id^="p-"][id*="-attachment"] + br {
+  display: none;
+}

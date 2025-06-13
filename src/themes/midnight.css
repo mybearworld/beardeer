@@ -1,0 +1,22 @@
+/** Theme by @cole */
+
+:root {
+  --deer-background: #000000;
+
+  --deer-foreground: #ffffff;
+  --deer-reply: #d6d6d6;
+
+  --deer-button: #1a1a1a;
+  --deer-button-hover: #1f1f1f;
+  --deer-button-disabled: #3d3d3d;
+
+  --deer-error: #ffffff;
+
+  --deer-seperator: #383838;
+  --deer-horizontalrule: #464646;
+
+  --deer-image-border: #383838;
+
+  --deer-container-background: #292929;
+  --deer-danger-background: #382727;
+}
