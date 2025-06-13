@@ -317,3 +317,25 @@ td {
 #mc-danger-container {
   background-color: var(--deer-danger-background);
 }
+
+#mm-flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+.mm-container {
+  width: auto;
+  padding: 12px;
+  border-radius: 4px;
+  margin: 8px;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: top;
+  flex-grow: 1;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background-color: var(--deer-container-background);
+}

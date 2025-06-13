@@ -19,6 +19,7 @@ const elements = {
   buttonLiveChat: select("button", "#ms-button-livechat", root),
   buttonGoToUser: select("button", "#ms-button-go-to-user", root),
   buttonSettings: select("button", "#ms-button-settings", root),
+  buttonModeration: select("button", "#ms-button-moderation", root),
   buttonLogOut: select("button", "#ms-button-log-out", root),
   ulist: select("div", "#ms-ulist", root),
   makePost: select("div", "#ms-make-post", root),
@@ -60,6 +61,9 @@ initialUserInfo.then((initialUserInfo) => {
   elements.buttonLiveChat.classList.remove("hidden");
   elements.buttonGoToUser.classList.remove("hidden");
   elements.buttonSettings.classList.remove("hidden");
+  if (initialUserInfo.permissions.length !== 0) {
+    elements.buttonModeration.classList.remove("hidden");
+  }
   elements.buttonLogOut.classList.remove("hidden");
 });
 startupInfo.then((startupInfo) => {
@@ -83,6 +87,10 @@ elements.buttonGoToUser.addEventListener("click", () => {
   const user = prompt("What user do you want to go to?");
   if (!user) return;
   switchToProfile(user);
+});
+
+elements.buttonModeration.addEventListener("click", () => {
+  switchToScene("main-moderation");
 });
 
 elements.buttonSettings.addEventListener("click", () => {

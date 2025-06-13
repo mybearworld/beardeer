@@ -73,6 +73,7 @@
             <button id="ms-button-livechat" class="hidden">Livechat</button>
             <button id="ms-button-go-to-user" class="hidden">@...</button>
             <button id="ms-button-settings" class="hidden">Settings</button>
+            <button id="ms-button-moderation" class="hidden">Moderation</button>
             <button id="ms-button-log-out" class="hidden">Log out</button>
           </div>
           <div id="ms-ulist"></div>
@@ -297,6 +298,20 @@
             <div>
               <input type="password" id="mc-delete-account-password" />
               <button id="mc-delete-account">Delete account</button>
+            </div>
+          </div>
+        </div>
+        <div id="main-moderation" class="hidden">
+          <div>
+            <button id="mm-button-back">Go back</button>
+          </div>
+          <div id="mm-flex">
+            <div class="mm-container">
+              <h2>Ban</h2>
+              <input type="text" placeholder="Username" id="mm-ban-username" />
+              <input type="datetime-local" id="mm-ban-date" />
+              <input type="text" placeholder="Reason" id="mm-ban-reason" />
+              <button id="mm-ban">Ban</button>
             </div>
           </div>
         </div>
