@@ -281,6 +281,24 @@ const postElement = (post: Post) => {
       elements.msg.focus();
     },
   );
+  initialUserInfo.then((initialUserInfo) => {
+    if (
+      initialUserInfo.username === post.author.username ||
+      initialUserInfo.permissions.includes("DELETE")
+    ) {
+      select("span", ".post-delete-button-area", element).classList.remove(
+        "hidden",
+      );
+    }
+  });
+  select("button", ".post-delete-button", element).addEventListener(
+    "click",
+    () => {
+      if (confirm(`Do you want to delete this post?\n${post.content}`)) {
+        send({ command: "delete_post", id: post._id }, z.object({}));
+      }
+    },
+  );
   return element;
 };
 
