@@ -473,22 +473,23 @@ const postElement = (post: Post, isLiveChat: boolean) => {
     },
   );
   initialUserInfo.then((initialUserInfo) => {
-    select("span", ".post-reply-button-area", element).classList.remove(
-      "hidden",
-    );
-    if (!isLiveChat && initialUserInfo.username === post.author.username) {
-      select("span", ".post-edit-button-area", element).classList.remove(
+    if (!isLiveChat) {
+      select("span", ".post-reply-button-area", element).classList.remove(
         "hidden",
       );
-    }
-    if (
-      !isLiveChat &&
-      (initialUserInfo.username === post.author.username ||
-        initialUserInfo.permissions.includes("DELETE"))
-    ) {
-      select("span", ".post-delete-button-area", element).classList.remove(
-        "hidden",
-      );
+      if (initialUserInfo.username === post.author.username) {
+        select("span", ".post-edit-button-area", element).classList.remove(
+          "hidden",
+        );
+      }
+      if (
+        initialUserInfo.username === post.author.username ||
+        initialUserInfo.permissions.includes("DELETE")
+      ) {
+        select("span", ".post-delete-button-area", element).classList.remove(
+          "hidden",
+        );
+      }
     }
   });
   const editing = select("div", ".post-content-editing", element);
