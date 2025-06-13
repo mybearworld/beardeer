@@ -14,3 +14,6 @@ export const select = <H extends keyof HTMLElementTagNameMap>(
   }
   return element as HTMLElementTagNameMap[H];
 };
+export const clone = (el: HTMLTemplateElement) => {
+  return el.content.cloneNode(true) as DocumentFragment;
+};
