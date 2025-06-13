@@ -10,6 +10,7 @@ import souple from "../themes/souple.css?inline";
 
 const elements = {
   theme: select("style", "#theme"),
+  customCSS: select("style", "#custom-css"),
 } as const;
 
 const themesObject = {
@@ -28,6 +29,7 @@ export const themes = Object.keys(
 const settingsSchema = z.object({
   enterSends: z.boolean(),
   theme: z.enum(themes),
+  customCSS: z.string(),
 });
 
 export type Settings = z.infer<typeof settingsSchema>;
@@ -36,6 +38,7 @@ export type Setting = keyof Settings;
 const defaultSettings: Settings = {
   enterSends: true,
   theme: "Deer",
+  customCSS: "",
 };
 
 let settings: Partial<Settings> = {};
@@ -58,6 +61,10 @@ export const setSetting = <TSetting extends Setting>(
   if (setting === "theme") {
     elements.theme.innerHTML = themesObject[value as Settings["theme"]];
   }
+  if (setting === "customCSS") {
+    elements.customCSS.innerHTML = value as Settings["customCSS"];
+  }
 };
 
 elements.theme.innerHTML = themesObject[getSetting("theme")];
+elements.customCSS.innerHTML = getSetting("customCSS");

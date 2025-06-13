@@ -23,6 +23,7 @@ const elements = {
   enterSends: select("input", "#mc-enter-sends", root),
   selectedTheme: select("span", "#mc-selected-theme", root),
   themes: select("div", "#mc-themes", root),
+  customCSS: select("textarea", "#mc-custom-css", root),
 } as const;
 
 elements.buttonBack.addEventListener("click", () => {
@@ -32,6 +33,7 @@ elements.buttonBack.addEventListener("click", () => {
 onScene("main-config", async () => {
   elements.enterSends.checked = getSetting("enterSends");
   elements.selectedTheme.textContent = getSetting("theme");
+  elements.customCSS.textContent = getSetting("customCSS");
   const username = (await initialUserInfo).username;
   const user = await send(
     { command: "get_user", username },
@@ -82,4 +84,7 @@ themes.forEach((theme) => {
     elements.selectedTheme.textContent = theme;
   });
   elements.themes.append(button);
+});
+elements.customCSS.addEventListener("input", () => {
+  setSetting("customCSS", elements.customCSS.value);
 });
