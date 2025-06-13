@@ -67,3 +67,16 @@ export const send = <TResponse extends z.ZodObject>(
       websocket.addEventListener("message", event);
     });
   });
+
+export const listen = <TPacket extends z.ZodObject>(
+  schema: TPacket,
+  callback: (packet: z.infer<TPacket>) => void
+) => {
+  websocket.addEventListener("message", (ev) => {
+    const parsed = schema.safeParse(JSON.parse(ev.data));
+    if (!parsed.success) {
+      return;
+    }
+    callback(parsed.data);
+  });
+};

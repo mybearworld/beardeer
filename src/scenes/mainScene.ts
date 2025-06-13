@@ -1,7 +1,8 @@
+import { z } from "zod/v4";
 import { switchToScene } from "../lib/scene";
-import type { Post } from "../lib/schemas";
+import { postSchema, type Post } from "../lib/schemas";
 import { select } from "../lib/select";
-import { startupInfo, initialUserInfo } from "../lib/ws";
+import { startupInfo, initialUserInfo, listen } from "../lib/ws";
 
 const root = select("div", "#main-scene");
 const elements = {
@@ -25,6 +26,19 @@ startupInfo.then((startupInfo) => {
 elements.backToMenuButton.addEventListener("click", () => {
   switchToScene("register-login");
 });
+
+listen(
+  z.object({
+    command: z.literal("new_post"),
+    data: postSchema,
+  }),
+  (post) => {
+    elements.posts.insertBefore(
+      postElement(post.data),
+      elements.posts.firstChild
+    );
+  }
+);
 
 const postElement = (post: Post) => {
   const element = elements.postTemplate.content.cloneNode(
