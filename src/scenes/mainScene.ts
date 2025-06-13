@@ -60,6 +60,16 @@ elements.msg.addEventListener("keydown", (ev) => {
     ev.preventDefault();
     sendPost();
   }
+  if (ev.key === "Tab") {
+    const first = elements.suggestions.firstChild;
+    if (first && first instanceof HTMLButtonElement) {
+      first.click();
+      ev.preventDefault();
+    }
+  }
+});
+["touchstart", "keyup", "mouseup", "keydown", "focus"].forEach((e) => {
+  elements.msg.addEventListener(e, () => selection());
 });
 elements.buttonPost.addEventListener("click", () => {
   sendPost();
@@ -128,6 +138,95 @@ elements.presets.querySelectorAll("button").forEach((button) => {
     sendPost();
   });
 });
+
+function selection() {
+  const suggestions = determineSuggestions();
+  elements.suggestions.innerHTML = "";
+  if (suggestions === null) return;
+  elements.suggestions.append(
+    ...suggestions.map(({ desc, string, newPos }) => {
+      const btn = document.createElement("button");
+      btn.textContent = desc;
+      btn.addEventListener("click", () => {
+        elements.msg.value = string;
+        elements.msg.setSelectionRange(newPos, newPos);
+        elements.msg.focus();
+        selection();
+      });
+      return btn;
+    }),
+  );
+}
+
+function determineSuggestions() {
+  elements.suggestions.classList.remove("hidden");
+  if (elements.msg.selectionStart !== elements.msg.selectionEnd) return null;
+  const botSuggestions = determineBotSuggestions();
+  if (botSuggestions !== null) return botSuggestions;
+  const pre = elements.msg.value.slice(0, elements.msg.selectionStart);
+  const post = elements.msg.value.slice(elements.msg.selectionStart);
+  const mentionMatch = pre.match(/@([a-zA-Z\-_0-9]*)$/);
+  if (mentionMatch) {
+    const usernamePrefix = mentionMatch[1];
+    const matchingUsers = onlineUsers.filter(
+      (username) =>
+        username !== usernamePrefix && username.startsWith(usernamePrefix),
+    );
+    return matchingUsers.map((user) => ({
+      desc: "@" + user,
+      string:
+        pre.slice(0, -mentionMatch[0].length) +
+        "@" +
+        user +
+        (post.startsWith(" ") ? "" : " ") +
+        post,
+      newPos:
+        elements.msg.selectionStart + 1 + (user.length - usernamePrefix.length),
+    }));
+  }
+  return null;
+}
+
+const BOTS = [
+  {
+    showIf: () => onlineUsers.includes("bot"),
+    prefix: "/",
+    // prettier-ignore
+    commands: ["help", "ping", "whoami", "dice", "expose ", "grrr", "me", "orange", "work", "fish", "about", "golf", "glungus", "thesoupiscoldandthesaladishot", "count ", "math ", "lb", "pi", "bal", "8ball", "glup", "notify ", "reversefish", "hEmulator ", "shameposts"],
+  },
+  {
+    showIf: () => onlineUsers.includes("legoshi"),
+    prefix: "@legoshi ",
+    // prettier-ignore
+    commands: ["help", "quote", "cat", "death", "math ", "kill ", "balance", "labor", "reverselabor", "shop", "buy "],
+  },
+  {
+    showIf: () => onlineUsers.includes("sb4bot"),
+    prefix: "@sb4bot ",
+    // prettier-ignore
+    commands: ["help", "balance", "notify ", "reversework", "rps ", "rng ", "wawameter ", "work"],
+  },
+];
+
+function determineBotSuggestions() {
+  if (elements.msg.selectionStart !== elements.msg.value.length) return null;
+  const bot = BOTS.find(
+    (bot) => elements.msg.value.startsWith(bot.prefix) && bot.showIf(),
+  );
+  if (!bot) return null;
+  return bot.commands
+    .map((command) => bot.prefix + command)
+    .filter(
+      (command) =>
+        command !== elements.msg.value &&
+        command.startsWith(elements.msg.value),
+    )
+    .map((command) => ({
+      desc: command.trim(),
+      string: command,
+      newPos: command.length,
+    }));
+}
 
 listen(
   z.object({
@@ -213,8 +312,10 @@ const clientIcon = (c: string | null) =>
   : c === "Unknown" ? "❓"
   : "🤖";
 
+let onlineUsers: string[] = [];
 const updateUlist = (ulist: Ulist) => {
   const entries = Object.entries(ulist);
+  onlineUsers = entries.map(([name]) => name);
   if (entries.length === 0) {
     elements.ulist.innerHTML = `Nobody is online. 😥🦌`;
     return;
