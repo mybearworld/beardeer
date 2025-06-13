@@ -1,7 +1,7 @@
 import { select } from "./select";
 
 const elements = {
-  scene: select<HTMLDivElement>(".scene"),
+  scene: select("div", ".scene"),
 } as const;
 
 export const switchToScene = (scene: string) => {

@@ -1,4 +1,5 @@
-export const select = <H extends HTMLElement>(
+export const select = <H extends keyof HTMLElementTagNameMap>(
+  elementName: H,
   query: string,
   base?: HTMLElement | DocumentFragment
 ) => {
@@ -6,5 +7,10 @@ export const select = <H extends HTMLElement>(
   if (element === null) {
     throw new Error(`Element ${query} does not exist.`);
   }
-  return element as H;
+  if (element.tagName !== elementName.toUpperCase()) {
+    throw new Error(
+      `Element ${query} is not a ${elementName}, but a ${element.tagName.toLowerCase()}.`
+    );
+  }
+  return element as HTMLElementTagNameMap[H];
 };

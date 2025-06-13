@@ -4,16 +4,16 @@ import { switchToScene } from "../lib/scene";
 import { userSchema } from "../lib/schemas";
 import { gotInitialUserInfo, send } from "../lib/ws";
 
-const root = select<HTMLDivElement>("#register-login");
+const root = select("div", "#register-login");
 const elements = {
-  tabLogin: select<HTMLButtonElement>("#rl-t-login", root),
-  tabSignup: select<HTMLButtonElement>("#rl-t-signup", root),
-  tabGuest: select<HTMLButtonElement>("#rl-t-guest", root),
-  loginContainer: select<HTMLDivElement>("#rl-login-container", root),
-  signupContainer: select<HTMLDivElement>("#rl-signup-container", root),
-  loginUsername: select<HTMLInputElement>(`#rl-username`, root),
-  loginPassword: select<HTMLInputElement>(`#rl-password`, root),
-  loginButton: select<HTMLInputElement>(`#rl-login-button`, root),
+  tabLogin: select("button", "#rl-t-login", root),
+  tabSignup: select("button", "#rl-t-signup", root),
+  tabGuest: select("button", "#rl-t-guest", root),
+  loginContainer: select("div", "#rl-login-container", root),
+  signupContainer: select("div", "#rl-signup-container", root),
+  loginUsername: select("input", `#rl-username`, root),
+  loginPassword: select("input", `#rl-password`, root),
+  loginButton: select("button", `#rl-login-button`, root),
 } as const;
 
 elements.tabLogin.addEventListener("click", () => {
