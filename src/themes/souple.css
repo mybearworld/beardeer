@@ -11,7 +11,7 @@ code {
     0 0 2px #0000005e;
   border-bottom: 1px solid #ffffff3d;
 }
-button {
+button:not(.no-button-styles) {
   border-radius: 0px;
   padding: 7px;
   font-family: "Noto Sans", sans-serif;
@@ -114,7 +114,6 @@ blockquote {
   text-shadow: 1px 1px black;
 }
 #ms-msg {
-  width: 60vw;
   box-sizing: border-box;
 }
 #ms-button-post {
