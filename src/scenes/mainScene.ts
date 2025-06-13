@@ -467,7 +467,21 @@ const postElement = (post: Post, isLiveChat: boolean) => {
         return;
       }
       replies.push(post._id);
-      elements.replies.append(renderReply(post));
+      const div = document.createElement("div");
+      div.classList.add("ms-reply-wrapper");
+      const renderedReply = renderReply(post);
+      div.append(renderedReply);
+      const remove = document.createElement("button");
+      remove.classList.add("no-button-styles");
+      remove.classList.add("link-styles");
+      remove.textContent = "Remove";
+      remove.addEventListener("click", () => {
+        replies = replies.filter((r) => r !== post._id);
+        div.remove();
+        updateDetails();
+      });
+      div.append(remove);
+      elements.replies.append(div);
       updateDetails();
       elements.msg.focus();
     },

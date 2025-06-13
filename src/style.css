@@ -123,6 +123,13 @@ textarea.big-textarea {
 #ms-replies-wrapper {
   text-align: center;
 }
+.ms-reply-wrapper {
+  display: flex;
+  gap: 0.5rem;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
 #ms-replies {
   display: flex;
   flex-direction: column;
