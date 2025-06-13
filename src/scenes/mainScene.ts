@@ -17,6 +17,7 @@ const elements = {
   buttonInbox: select("button", "#ms-button-inbox", root),
   buttonLiveChat: select("button", "#ms-button-livechat", root),
   buttonGoToUser: select("button", "#ms-button-go-to-user", root),
+  buttonSettings: select("button", "#ms-button-settings", root),
   buttonLogOut: select("button", "#ms-button-log-out", root),
   ulist: select("div", "#ms-ulist", root),
   makePost: select("div", "#ms-make-post", root),
@@ -57,6 +58,7 @@ initialUserInfo.then((initialUserInfo) => {
   elements.buttonInbox.classList.remove("hidden");
   elements.buttonLiveChat.classList.remove("hidden");
   elements.buttonGoToUser.classList.remove("hidden");
+  elements.buttonSettings.classList.remove("hidden");
   elements.buttonLogOut.classList.remove("hidden");
 });
 startupInfo.then((startupInfo) => {
@@ -80,6 +82,10 @@ elements.buttonGoToUser.addEventListener("click", () => {
   const user = prompt("What user do you want to go to?");
   if (!user) return;
   switchToProfile(user);
+});
+
+elements.buttonSettings.addEventListener("click", () => {
+  switchToScene("main-config");
 });
 
 elements.buttonLogOut.addEventListener("click", () => {

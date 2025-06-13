@@ -91,6 +91,10 @@ textarea {
   background-color: var(--deer-button-hover);
   color: var(--deer-foreground);
 }
+textarea.big-textarea {
+  min-width: 180px;
+  min-height: 100px;
+}
 
 #register-login {
   display: flex;
@@ -252,4 +256,15 @@ th,
 td {
   border: 1px solid currentColor;
   padding: 0.25rem 0.5rem;
+}
+
+.mc-container {
+  background-color: var(--deer-container-background);
+  width: 100%;
+  padding: 6px;
+  border-radius: 4px;
+  margin-top: 8px;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  box-sizing: border-box;
 }

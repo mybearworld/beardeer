@@ -70,6 +70,7 @@
             <button id="ms-button-inbox" class="hidden">Inbox</button>
             <button id="ms-button-livechat" class="hidden">Livechat</button>
             <button id="ms-button-go-to-user" class="hidden">@...</button>
+            <button id="ms-button-settings" class="hidden">Settings</button>
             <button id="ms-button-log-out" class="hidden">Log out</button>
           </div>
           <div id="ms-ulist"></div>
@@ -195,6 +196,74 @@
             <button id="ud-button-back">Go back</button>
           </div>
           <iframe id="ud-iframe" src="./userIframe.html"></iframe>
+        </div>
+        <div id="main-config" class="hidden">
+          <div>
+            <button id="mc-button-back">Go back</button>
+          </div>
+          <div class="mc-container">
+            <h2 class="header-notop">Profile</h2>
+            <div>
+              <input
+                id="mc-display-name"
+                placeholder="Display name..."
+                autocomplete="off"
+                type="text"
+                maxlength="20"
+              />
+              <button id="mc-button-display-name">Set display name</button>
+            </div>
+            <div>
+              <input
+                id="mc-avatar"
+                placeholder="Avatar URL..."
+                autocomplete="off"
+                type="text"
+                maxlength="656"
+              />
+              <button id="mc-button-avatar">Set avatar URL</button>
+            </div>
+            <div>
+              <input
+                id="mc-banner"
+                placeholder="Banner URL..."
+                autocomplete="off"
+                type="text"
+                maxlength="656"
+              />
+              <button id="mc-button-banner">Set banner URL</button>
+            </div>
+            <div>
+              <textarea
+                class="big-textarea"
+                id="mc-css"
+                placeholder="Profile CSS..."
+                autocomplete="off"
+              ></textarea>
+              <button id="mc-button-css">Set CSS</button>
+            </div>
+            <div>
+              <textarea
+                class="big-textarea"
+                id="mc-bio"
+                placeholder="Bio..."
+                type="text"
+                autocomplete="off"
+                maxlength="512"
+              ></textarea>
+              <button id="mc-button-bio">Set bio</button>
+            </div>
+            <div>
+              <input
+                id="mc-lastfm"
+                placeholder="Last.fm..."
+                autocomplete="off"
+                type="text"
+                maxlength="72"
+              />
+              <button id="mc-button-lastfm">Set Last.fm</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
