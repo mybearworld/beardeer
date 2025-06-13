@@ -1,10 +1,11 @@
 import { z } from "zod/v4";
-import { postSchema, type User } from "./schemas";
+import { postSchema, ulistSchema, type User } from "./schemas";
 
 const startupInfoSchema = z.object({
   command: z.literal("greet"),
   version: z.string(),
   messages: postSchema.array(),
+  ulist: ulistSchema,
 });
 
 const websocket = new WebSocket("wss://chaos.goog-search.eu.org/");

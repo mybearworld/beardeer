@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 import { switchToScene } from "../lib/scene";
-import { postSchema, type Post } from "../lib/schemas";
+import { postSchema, ulistSchema, type Post, type Ulist } from "../lib/schemas";
 import { clone, select } from "../lib/elements";
 import { startupInfo, initialUserInfo, listen } from "../lib/ws";
 
@@ -9,6 +9,7 @@ const elements = {
   username: select("span", "#ms-username", root),
   showGuestNav: select("div", "#ms-show-guest-nav", root),
   backToMenuButton: select("button", "#ms-button-reload", root),
+  ulist: select("div", "#ms-ulist", root),
   posts: select("div", "#ms-posts", root),
   postTemplate: select("template", "#ms-post-template", root),
 } as const;
@@ -25,12 +26,22 @@ startupInfo.then((startupInfo) => {
     posts[post._id] = { element, data: post };
     elements.posts.append(element);
   });
+  updateUlist(startupInfo.ulist);
 });
 
 elements.backToMenuButton.addEventListener("click", () => {
   switchToScene("register-login");
 });
 
+listen(
+  z.object({
+    command: z.literal("ulist"),
+    ulist: ulistSchema,
+  }),
+  (packet) => {
+    updateUlist(packet.ulist);
+  },
+);
 listen(
   z.object({
     command: z.literal("new_post"),
@@ -40,7 +51,7 @@ listen(
     const element = postElement(packet.data);
     posts[packet.data._id] = { element, data: packet.data };
     elements.posts.insertBefore(element, elements.posts.firstChild);
-  }
+  },
 );
 listen(
   z.object({
@@ -55,7 +66,7 @@ listen(
       return;
     }
     select("p", ".post-content", postElement).textContent = packet.content;
-  }
+  },
 );
 listen(
   z.object({
@@ -71,13 +82,48 @@ listen(
     }
     const replaced = document.createElement("div");
     replaced.classList.add("post-deletion-message");
-    replaced.textContent = packet.deleted_by_author
-      ? "post deleted by author"
+    replaced.textContent =
+      packet.deleted_by_author ?
+        "post deleted by author"
       : "post deleted by moderator";
     postElement.replaceWith(replaced);
     delete posts[packet._id];
-  }
+  },
 );
+
+const clientIcon = (c: string | null) =>
+  c === null ? " 🤖"
+  : c.startsWith("BossDeer ") ? " 🦌"
+  : c.startsWith("BearDeer") ? " 🐻"
+  : c.startsWith("BetterDeer ") ? " ✨"
+  : c.startsWith("PresetDeer ") ? " 🧩"
+  : c.startsWith("Kansas") ? " 🇺🇸"
+  : c.startsWith("whitetail") ? "🦨"
+  : c === "Unknown" ? "❓"
+  : "🤖";
+
+const updateUlist = (ulist: Ulist) => {
+  const entries = Object.entries(ulist);
+  if (entries.length === 0) {
+    elements.ulist.innerHTML = `Nobody is online. 😥🦌`;
+    return;
+  }
+  if (entries.length === 1) {
+    elements.ulist.innerHTML = "You are the only user online. 😥🦌";
+    return;
+  }
+  elements.ulist.textContent = `${entries.length} users online (`;
+  entries.forEach(([name, { client }], i) => {
+    const span = document.createElement("span");
+    span.textContent = name + " " + clientIcon(client);
+    span.title = client || "";
+    elements.ulist.append(span);
+    if (i !== entries.length - 1) {
+      elements.ulist.append(", ");
+    }
+  });
+  elements.ulist.append(")");
+};
 
 const postElement = (post: Post) => {
   const element = select("div", ".post", clone(elements.postTemplate));

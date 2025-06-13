@@ -36,3 +36,11 @@ export const postSchema = z.object({
   author: userSchema.omit({ profile: true }),
 });
 export type Post = z.infer<typeof postSchema>;
+
+export const ulistSchema = z.record(
+  z.string(),
+  z.object({
+    client: z.string().nullable(),
+  }),
+);
+export type Ulist = z.infer<typeof ulistSchema>;
