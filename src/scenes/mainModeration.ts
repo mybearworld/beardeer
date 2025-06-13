@@ -12,6 +12,8 @@ const elements = {
   ban: select("button", "#mm-ban", root),
   generateInviteCode: select("button", "#mm-generate-invite-code", root),
   resetInviteCodes: select("button", "#mm-reset-invite-codes", root),
+  forcecickUsername: select("input", "#mm-forcekick-username", root),
+  forcekick: select("button", "#mm-forcekick", root),
 } as const;
 
 elements.buttonBack.addEventListener("click", () => {
@@ -48,4 +50,15 @@ elements.generateInviteCode.addEventListener("click", async () => {
 });
 elements.resetInviteCodes.addEventListener("click", async () => {
   await send({ command: "reset_invites" }, z.object({}));
+});
+
+elements.forcekick.addEventListener("click", async () => {
+  if (
+    await send(
+      { command: "force_kick", username: elements.forcecickUsername.value },
+      z.object({}),
+    )
+  ) {
+    elements.forcecickUsername.value = "";
+  }
 });
