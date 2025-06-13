@@ -1,9 +1,10 @@
 import { z } from "zod/v4";
-import type { User } from "./schemas";
+import { postSchema, type User } from "./schemas";
 
 const startupInfoSchema = z.object({
   command: z.literal("greet"),
   version: z.string(),
+  messages: postSchema.array(),
 });
 
 const websocket = new WebSocket("wss://chaos.goog-search.eu.org/");
@@ -14,8 +15,8 @@ export const startupInfo = new Promise<z.infer<typeof startupInfoSchema>>(
       const parsed = startupInfoSchema.safeParse(JSON.parse(ev.data));
       if (parsed.success) {
         resolve(parsed.data);
+        websocket.removeEventListener("message", initListener);
       }
-      websocket.removeEventListener("message", initListener);
     };
     websocket.addEventListener("message", initListener);
   }
