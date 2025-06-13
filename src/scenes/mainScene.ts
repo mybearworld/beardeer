@@ -111,7 +111,7 @@ elements.buttonLiveChat.addEventListener("click", () => {
 });
 
 elements.msg.addEventListener("keydown", (ev) => {
-  resizePostBox();
+  resizeTextArea(elements.msg);
   if (getSetting("enterSends") && ev.key === "Enter" && !ev.shiftKey) {
     ev.preventDefault();
     sendPost();
@@ -147,13 +147,13 @@ const sendPost = async () => {
   if (!response) return;
   replies = [];
   elements.msg.value = "";
-  resizePostBox();
+  resizeTextArea(elements.msg);
   clearDetails();
 };
-const resizePostBox = () => {
+const resizeTextArea = (textarea: HTMLTextAreaElement) => {
   requestAnimationFrame(() => {
-    elements.msg.style.minHeight = "auto";
-    elements.msg.style.minHeight = elements.msg.scrollHeight + "px";
+    textarea.style.minHeight = "auto";
+    textarea.style.minHeight = textarea.scrollHeight + "px";
   });
 };
 const updateDetails = () => {
@@ -321,6 +321,7 @@ listen(
       console.warn(`No post with the ID ${packet._id} found`);
       return;
     }
+    postElement.data.content = packet.content;
     if (postElement.element) {
       select("div", ".post-content", postElement.element).innerHTML =
         parseMarkdown(packet.content);
@@ -419,9 +420,8 @@ const postElement = (post: Post) => {
   });
   select("span", ".post-date", element).textContent =
     post.created.toLocaleString();
-  select("div", ".post-content", element).innerHTML = parseMarkdown(
-    post.content,
-  );
+  const postContent = select("div", ".post-content", element);
+  postContent.innerHTML = parseMarkdown(post.content);
   const repliesElement = select("div", ".post-replies", element);
   post.replies.forEach((reply) => {
     const replyElement = renderReply(reply);
@@ -476,6 +476,11 @@ const postElement = (post: Post) => {
     select("span", ".post-reply-button-area", element).classList.remove(
       "hidden",
     );
+    if (initialUserInfo.username === post.author.username) {
+      select("span", ".post-edit-button-area", element).classList.remove(
+        "hidden",
+      );
+    }
     if (
       initialUserInfo.username === post.author.username ||
       initialUserInfo.permissions.includes("DELETE")
@@ -485,6 +490,54 @@ const postElement = (post: Post) => {
       );
     }
   });
+  const editing = select("div", ".post-content-editing", element);
+  const editingTextarea = select(
+    "textarea",
+    ".post-content-editing-textarea",
+    element,
+  );
+  const edit = async () => {
+    if (
+      await send(
+        {
+          command: "edit_post",
+          id: post._id,
+          content: editingTextarea.value,
+        },
+        z.object({}),
+      )
+    ) {
+      postContent.classList.remove("hidden");
+      editing.classList.add("hidden");
+    }
+  };
+  editingTextarea.addEventListener("keydown", (ev) => {
+    resizeTextArea(editingTextarea);
+    if (getSetting("enterSends") && ev.key === "Enter" && !ev.shiftKey) {
+      edit();
+      ev.preventDefault();
+    }
+  });
+  select("button", ".post-edit-button", element).addEventListener(
+    "click",
+    () => {
+      postContent.classList.add("hidden");
+      editing.classList.remove("hidden");
+      editingTextarea.value = posts[post._id].data.content;
+      editingTextarea.focus();
+    },
+  );
+  select("button", ".post-content-editing-ok", element).addEventListener(
+    "click",
+    edit,
+  );
+  select("button", ".post-content-editing-cancel", element).addEventListener(
+    "click",
+    () => {
+      postContent.classList.remove("hidden");
+      editing.classList.add("hidden");
+    },
+  );
   select("button", ".post-delete-button", element).addEventListener(
     "click",
     () => {

@@ -159,6 +159,14 @@
                           Reply
                         </button>
                       </span>
+                      <span class="post-edit-button-area hidden">
+                        -
+                        <button
+                          class="post-edit-button no-button-styles link-styles"
+                        >
+                          Edit
+                        </button>
+                      </span>
                       <span class="post-delete-button-area hidden">
                         -
                         <button
@@ -172,6 +180,14 @@
                 </div>
                 <div class="post-replies"></div>
                 <div class="post-content"></div>
+                <div class="hidden post-content-editing">
+                  <textarea
+                    class="post-content-editing-textarea"
+                    rows="1"
+                  ></textarea>
+                  <button class="post-content-editing-ok">Ok</button>
+                  <button class="post-content-editing-cancel">Cancel</button>
+                </div>
                 <div class="post-attachments"></div>
               </div>
             </template>
