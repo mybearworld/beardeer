@@ -48,14 +48,27 @@ export const send = <TResponse extends z.ZodObject>(
           form: z.string(),
           context: z.string(),
           listener: z.literal(listener),
+          banned_until: z
+            .number()
+            .transform((n) => new Date(n * 1000))
+            .optional(),
+          ban_reason: z.string().optional(),
         }),
       );
-    const event = (ev: MessageEvent<string>) => {
+    const event = async (ev: MessageEvent<string>) => {
       const parsed = schema.safeParse(JSON.parse(ev.data));
       if (!parsed.success) {
         return;
       }
       if (parsed.data.error) {
+        console.log("!", parsed.data.code, parsed.data.code === "banned");
+        if (parsed.data.code === "banned") {
+          alert(
+            `You are banned until ${parsed.data.banned_until?.toLocaleString() || "an unknown time"} for ${parsed.data.ban_reason || "an unknown reason"}. You will now be logged out.`,
+          );
+          localStorage.removeItem("beardeer:token");
+          location.reload();
+        }
         alert(
           `uh oh! ${parsed.data.context} (${parsed.data.code} in ${parsed.data.form})`,
         );
