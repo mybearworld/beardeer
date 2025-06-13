@@ -24,6 +24,9 @@ elements.tabSignup.addEventListener("click", () => {
   elements.loginContainer.classList.add("hidden");
   elements.signupContainer.classList.remove("hidden");
 });
+elements.tabGuest.addEventListener("click", () => {
+  switchToScene("main-scene");
+});
 elements.loginButton.addEventListener("click", async () => {
   const response = await send(
     {
