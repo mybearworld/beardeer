@@ -45,7 +45,16 @@ a {
 p {
   margin-block: 0;
 }
-button {
+.no-button-styles {
+  background-color: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  padding: 0;
+  border: 0;
+}
+button:not(.no-button-styles) {
   background-color: var(--deer-button);
   color: var(--deer-foreground);
   border: none;
@@ -56,10 +65,12 @@ button {
 }
 button:hover {
   cursor: pointer;
+}
+button:not(.no-button-styles):hover {
   background-color: var(--deer-button-hover);
 }
-button:disabled,
-button[disabled] {
+button:not(.no-button-styles):disabled,
+button:not(.no-button-styles)[disabled] {
   cursor: not-allowed;
   background-color: var(--deer-button-disabled);
 }
@@ -140,6 +151,10 @@ textarea {
 }
 .post-date {
   font-size: small;
+}
+.reply {
+  font-style: italic;
+  color: var(--deer-reply);
 }
 .post-deletion-message {
   font-style: italic;

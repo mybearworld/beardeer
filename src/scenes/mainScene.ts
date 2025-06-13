@@ -20,9 +20,17 @@ const elements = {
   buttonPost: select("button", "#ms-button-post", root),
   posts: select("div", "#ms-posts", root),
   postTemplate: select("template", "#ms-post-template", root),
+  replyTemplate: select("template", "#ms-reply-template", root),
 } as const;
 
-const posts: Record<string, { element: HTMLDivElement; data: Post }> = {};
+const posts: Record<
+  string,
+  {
+    element?: HTMLDivElement;
+    data: Omit<Post, "author"> & { author: Post["author"] | string };
+    replies: HTMLButtonElement[];
+  }
+> = {};
 
 initialUserInfo.then((initialUserInfo) => {
   elements.username.textContent = initialUserInfo.username;
@@ -32,7 +40,7 @@ initialUserInfo.then((initialUserInfo) => {
 startupInfo.then((startupInfo) => {
   startupInfo.messages.forEach((post) => {
     const element = postElement(post);
-    posts[post._id] = { element, data: post };
+    posts[post._id] = { element, data: post, replies: [] };
     elements.posts.append(element);
   });
   updateUlist(startupInfo.ulist);
@@ -89,7 +97,7 @@ listen(
   }),
   (packet) => {
     const element = postElement(packet.data);
-    posts[packet.data._id] = { element, data: packet.data };
+    posts[packet.data._id] = { element, data: packet.data, replies: [] };
     elements.posts.insertBefore(element, elements.posts.firstChild);
   },
 );
@@ -100,12 +108,18 @@ listen(
     content: z.string(),
   }),
   (packet) => {
-    const postElement = posts[packet._id]?.element;
+    const postElement = posts[packet._id];
     if (!postElement) {
       console.warn(`No post with the ID ${packet._id} found`);
       return;
     }
-    select("p", ".post-content", postElement).textContent = packet.content;
+    if (postElement.element) {
+      select("p", ".post-content", postElement.element).textContent =
+        packet.content;
+    }
+    postElement.replies.forEach((reply) => {
+      select("span", ".reply-content", reply).textContent = packet.content;
+    });
   },
 );
 listen(
@@ -115,18 +129,27 @@ listen(
     deleted_by_author: z.boolean(),
   }),
   (packet) => {
-    const postElement = posts[packet._id]?.element;
-    if (!postElement) {
+    const postData = posts[packet._id];
+    if (!postData) {
       console.warn(`No post with the ID ${packet._id} found`);
       return;
     }
-    const replaced = document.createElement("div");
-    replaced.classList.add("post-deletion-message");
-    replaced.textContent =
+    const message =
       packet.deleted_by_author ?
         "post deleted by author"
       : "post deleted by moderator";
-    postElement.replaceWith(replaced);
+    const element = postData.element;
+    if (element) {
+      const replaced = document.createElement("div");
+      replaced.classList.add("post-deletion-message");
+      replaced.textContent = message;
+      element.replaceWith(replaced);
+    }
+    postData.replies.forEach((reply) => {
+      select("span", ".reply-display-name", reply).textContent = "deleted";
+      select("span", ".reply-username", reply).textContent = "deleted";
+      select("span", ".reply-content", reply).textContent = message;
+    });
     delete posts[packet._id];
   },
 );
@@ -167,7 +190,6 @@ const updateUlist = (ulist: Ulist) => {
 
 const postElement = (post: Post) => {
   const element = select("div", ".post", clone(elements.postTemplate));
-  element.dataset.postId = post._id;
   select("img", ".pfp", element).src = post.author.avatar;
   select("b", ".post-display-name", element).textContent =
     post.author.display_name;
@@ -175,5 +197,30 @@ const postElement = (post: Post) => {
   select("span", ".post-date", element).textContent =
     post.created.toLocaleString();
   select("p", ".post-content", element).textContent = post.content;
+  const replies = select("div", ".post-replies", element);
+  post.replies.forEach((reply) => {
+    const replyElement = select(
+      "button",
+      ".reply",
+      clone(elements.replyTemplate),
+    );
+    select("span", ".reply-display-name", replyElement).textContent =
+      typeof reply.author === "string" ?
+        reply.author
+      : reply.author.display_name;
+    select("span", ".reply-username", replyElement).textContent =
+      typeof reply.author === "string" ? reply.author : reply.author.username;
+    const replyContent = select("span", ".reply-content", replyElement);
+    replyContent.textContent = reply.content;
+    if (posts[reply._id]) {
+      posts[reply._id].replies.push(replyElement);
+    } else {
+      posts[reply._id] = { data: reply, replies: [replyElement] };
+    }
+    replyElement.addEventListener("click", () => {
+      posts[reply._id]?.element?.scrollIntoView({ behavior: "smooth" });
+    });
+    replies.append(replyElement);
+  });
   return element;
 };
