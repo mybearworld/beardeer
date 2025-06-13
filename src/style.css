@@ -167,6 +167,10 @@ textarea {
   font-style: italic;
   color: var(--deer-reply);
 }
+.attachment img,
+.attachment video {
+  max-height: 300px;
+}
 .post-deletion-message {
   font-style: italic;
   font-size: smaller;

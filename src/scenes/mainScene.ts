@@ -241,6 +241,34 @@ const postElement = (post: Post) => {
     }
     repliesElement.append(replyElement);
   });
+  const attachments = select("div", ".post-attachments", element);
+  post.attachments.forEach((attachment) => {
+    const attachmentEl = document.createElement("div");
+    attachmentEl.classList.add("attachment");
+    attachments.append(attachmentEl);
+    fetch(attachment, { method: "HEAD" })
+      .then(async (response) => {
+        if (response.headers.get("content-type")?.startsWith("video/")) {
+          const v = document.createElement("video");
+          v.src = attachment;
+          v.addEventListener("loadeddata", () => {
+            v.height = v.clientHeight;
+            v.width = v.clientWidth;
+          });
+          v.controls = true;
+          attachmentEl.append(v);
+        } else {
+          const i = document.createElement("img");
+          i.src = attachment;
+          attachmentEl.append(i);
+        }
+      })
+      .catch(() => {
+        const i = document.createElement("img");
+        i.src = attachment;
+        attachmentEl.append(i);
+      });
+  });
   select("button", ".post-reply-button", element).addEventListener(
     "click",
     () => {
