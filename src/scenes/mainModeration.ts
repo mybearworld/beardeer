@@ -12,7 +12,7 @@ const elements = {
   ban: select("button", "#mm-ban", root),
   generateInviteCode: select("button", "#mm-generate-invite-code", root),
   resetInviteCodes: select("button", "#mm-reset-invite-codes", root),
-  forcecickUsername: select("input", "#mm-forcekick-username", root),
+  forcekickUsername: select("input", "#mm-forcekick-username", root),
   forcekick: select("button", "#mm-forcekick", root),
   inboxMessage: select("input", "#mm-inbox-message", root),
   inbox: select("button", "#mm-inbox", root),
@@ -61,11 +61,11 @@ elements.resetInviteCodes.addEventListener("click", async () => {
 elements.forcekick.addEventListener("click", async () => {
   if (
     await send(
-      { command: "force_kick", username: elements.forcecickUsername.value },
+      { command: "force_kick", username: elements.forcekickUsername.value },
       z.object({}),
     )
   ) {
-    elements.forcecickUsername.value = "";
+    elements.forcekickUsername.value = "";
   }
 });
 
@@ -95,7 +95,7 @@ elements.ips.addEventListener("click", async () => {
     `${elements.ipsUsername.value}'s recent IPs are:\n` +
       ips.ips.map((s) => `- ${s}`).join("\n"),
   );
-  elements.inboxMessage.value = "";
+  elements.ipsUsername.value = "";
 });
 
 elements.ipBan.addEventListener("click", async () => {
