@@ -115,6 +115,20 @@ const clearDetails = () => {
   updateDetails();
 };
 
+let presetsOn = false;
+elements.buttonPresets.addEventListener("click", () => {
+  presetsOn = !presetsOn;
+  elements.doNotTheSpamming.classList.toggle("hidden", !presetsOn);
+  elements.msg.classList.toggle("hidden", presetsOn);
+  elements.presets.classList.toggle("hidden", !presetsOn);
+});
+elements.presets.querySelectorAll("button").forEach((button) => {
+  button.addEventListener("click", () => {
+    elements.msg.value = button.textContent || "";
+    sendPost();
+  });
+});
+
 listen(
   z.object({
     command: z.literal("ulist"),

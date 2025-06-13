@@ -65,7 +65,6 @@ button:not(.no-button-styles) {
   border-radius: 4px;
   padding: 8px;
   font-family: "Noto Sans", sans-serif, serif, "sitelen seli kiwen";
-  margin-bottom: 4px;
 }
 button:hover {
   cursor: pointer;
@@ -131,6 +130,12 @@ textarea {
 }
 #ms-msg {
   flex: 1;
+}
+#ms-presets {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
 }
 .post {
   background-color: var(--deer-button-hover);
