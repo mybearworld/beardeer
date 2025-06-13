@@ -18,6 +18,8 @@ const elements = {
   inbox: select("button", "#mm-inbox", root),
   ipsUsername: select("input", "#mm-ips-username", root),
   ips: select("button", "#mm-ips", root),
+  ipBanIP: select("input", "#mm-ipban-ip", root),
+  ipBan: select("button", "#mm-ipban", root),
 } as const;
 
 elements.buttonBack.addEventListener("click", () => {
@@ -94,4 +96,15 @@ elements.ips.addEventListener("click", async () => {
       ips.ips.map((s) => `- ${s}`).join("\n"),
   );
   elements.inboxMessage.value = "";
+});
+
+elements.ipBan.addEventListener("click", async () => {
+  if (
+    await send(
+      { command: "banish_to_the_SHADOW_REALM", ip: elements.ipBanIP.value },
+      z.object({}),
+    )
+  ) {
+    elements.ipBanIP.value = "";
+  }
 });
