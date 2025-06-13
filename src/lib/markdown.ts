@@ -23,7 +23,7 @@ export const parseMarkdown = (
   );
 
 const emojify = (s: string) => {
-  return s.replace(/:([a-zA-Z]+):/gi, (s: string, name: string) =>
+  return s.replace(/:([a-zA-Z]+):/gi, (_: string, name: string) =>
     name in emoji ?
       `<img src=${emoji[name as keyof typeof emoji]} style="vertical-align: middle;" />`
     : `:${name}:`,
