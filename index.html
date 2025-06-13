@@ -59,6 +59,24 @@
         <div id="main-scene" class="hidden">
           Hello! Your username is
           <span id="ms-username"></span>.
+          <div id="ms-posts">
+            <template id="ms-post-template">
+              <div class="post">
+                <div class="post-top">
+                  <img class="pfp" />
+                  <div>
+                    <span>
+                      <b class="post-display-name"></b> (<span class="mono"
+                        >@<span class="post-username"></span></span
+                      >)
+                    </span>
+                    <span class="post-date"></span>
+                  </div>
+                </div>
+                <p class="post-content"></p>
+              </div>
+            </template>
+          </div>
         </div>
       </div>
     </div>

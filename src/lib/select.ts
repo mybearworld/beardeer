@@ -1,6 +1,6 @@
 export const select = <H extends HTMLElement>(
   query: string,
-  base?: HTMLElement
+  base?: HTMLElement | DocumentFragment
 ) => {
   const element = (base || document).querySelector(query);
   if (element === null) {

@@ -31,9 +31,15 @@ body {
 .hidden {
   display: none !important;
 }
+.mono {
+  font-family: monospace;
+}
 
 a {
   color: var(--deer-foreground);
+}
+p {
+  margin-block: 0;
 }
 button {
   background-color: var(--deer-button);
@@ -78,4 +84,36 @@ input {
   display: flex;
   align-items: stretch;
   flex-direction: column;
+}
+
+.post {
+  background-color: var(--deer-button-hover);
+  padding: 6px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
+}
+.pfp {
+  border-radius: 100%;
+  width: 36px;
+  height: 36px;
+  float: left;
+  margin-right: 8px;
+  margin-top: 2px;
+  border: 2px solid var(--deer-image-border);
+}
+.post-top {
+  display: flex;
+  align-items: center;
+}
+.post-top > div {
+  display: flex;
+  flex-direction: column;
+}
+.post-date {
+  font-size: small;
 }
