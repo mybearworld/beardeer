@@ -1,7 +1,7 @@
 import { z } from "zod/v4";
 import { switchToScene } from "../lib/scene";
 import { postSchema, type Post } from "../lib/schemas";
-import { select } from "../lib/select";
+import { select } from "../lib/elements";
 import { startupInfo, initialUserInfo, listen } from "../lib/ws";
 
 const root = select("div", "#main-scene");

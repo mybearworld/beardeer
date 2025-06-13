@@ -1,5 +1,5 @@
 import { z } from "zod/v4";
-import { select } from "../lib/select";
+import { select } from "../lib/elements";
 import { switchToScene } from "../lib/scene";
 import { userSchema } from "../lib/schemas";
 import { gotInitialUserInfo, send } from "../lib/ws";

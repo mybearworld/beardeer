@@ -1,4 +1,4 @@
-import { select } from "./select";
+import { select } from "./elements";
 
 const elements = {
   scene: select("div", ".scene"),
