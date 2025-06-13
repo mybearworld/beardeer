@@ -14,6 +14,8 @@ const elements = {
   resetInviteCodes: select("button", "#mm-reset-invite-codes", root),
   forcecickUsername: select("input", "#mm-forcekick-username", root),
   forcekick: select("button", "#mm-forcekick", root),
+  inboxMessage: select("input", "#mm-inbox-message", root),
+  inbox: select("button", "#mm-inbox", root),
 } as const;
 
 elements.buttonBack.addEventListener("click", () => {
@@ -60,5 +62,21 @@ elements.forcekick.addEventListener("click", async () => {
     )
   ) {
     elements.forcecickUsername.value = "";
+  }
+});
+
+elements.inbox.addEventListener("click", async () => {
+  if (
+    await send(
+      {
+        command: "post_inbox",
+        content: elements.inboxMessage.value,
+        replies: [],
+        attachments: [],
+      },
+      z.object({}),
+    )
+  ) {
+    elements.inboxMessage.value = "";
   }
 });
