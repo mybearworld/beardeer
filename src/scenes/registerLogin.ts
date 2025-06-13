@@ -1,8 +1,8 @@
 import { z } from "zod/v4";
 import { select } from "../lib/elements";
-import { switchToScene } from "../lib/scene";
+import { onSceneOnce, switchToScene } from "../lib/scene";
 import { userSchema } from "../lib/schemas";
-import { gotInitialUserInfo, send } from "../lib/ws";
+import { gotInitialUserInfo, send, startupInfo } from "../lib/ws";
 
 const root = select("div", "#register-login");
 const elements = {
@@ -38,9 +38,35 @@ elements.loginButton.addEventListener("click", async () => {
     z.object({
       token: z.string(),
       user: userSchema,
-    })
+    }),
   );
   if (!response) return;
-  gotInitialUserInfo(response.user);
+  gotInitialUserInfo(response.token, response.user);
   switchToScene("main-scene");
+});
+
+const storedToken = localStorage.getItem("beardeer:token");
+onSceneOnce("register-login", () => {
+  if (storedToken) {
+    switchToScene("main-scene");
+  }
+});
+startupInfo.then(async () => {
+  if (storedToken) {
+    const response = await send(
+      {
+        command: "login_token",
+        token: storedToken,
+        client: "BearDeer v2",
+      },
+      z.object({
+        user: userSchema,
+      }),
+    );
+    if (!response) {
+      switchToScene("register-login");
+      return;
+    }
+    gotInitialUserInfo(storedToken, response.user);
+  }
 });

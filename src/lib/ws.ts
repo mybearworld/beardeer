@@ -20,20 +20,22 @@ export const startupInfo = new Promise<z.infer<typeof startupInfoSchema>>(
       }
     };
     websocket.addEventListener("message", initListener);
-  }
+  },
 );
+
 let resolveInitialUserInfo: (user: User) => void;
 export const initialUserInfo = new Promise<User>((resolve) => {
   resolveInitialUserInfo = resolve;
 });
-export const gotInitialUserInfo = (user: User) => {
+export const gotInitialUserInfo = (token: string, user: User) => {
+  localStorage.setItem("beardeer:token", token);
   resolveInitialUserInfo(user);
 };
 
 let listenerI = 0;
 export const send = <TResponse extends z.ZodObject>(
   packet: Record<string, unknown>,
-  response: TResponse
+  response: TResponse,
 ) =>
   new Promise<z.infer<TResponse> | null>((resolve) => {
     const listener = listenerI++;
@@ -46,7 +48,7 @@ export const send = <TResponse extends z.ZodObject>(
           form: z.string(),
           context: z.string(),
           listener: z.literal(listener),
-        })
+        }),
       );
     const event = (ev: MessageEvent<string>) => {
       const parsed = schema.safeParse(JSON.parse(ev.data));
@@ -55,7 +57,7 @@ export const send = <TResponse extends z.ZodObject>(
       }
       if (parsed.data.error) {
         alert(
-          `uh oh! ${parsed.data.context} (${parsed.data.code} in ${parsed.data.form})`
+          `uh oh! ${parsed.data.context} (${parsed.data.code} in ${parsed.data.form})`,
         );
         resolve(null);
       } else {
@@ -71,7 +73,7 @@ export const send = <TResponse extends z.ZodObject>(
 
 export const listen = <TPacket extends z.ZodObject>(
   schema: TPacket,
-  callback: (packet: z.infer<TPacket>) => void
+  callback: (packet: z.infer<TPacket>) => void,
 ) => {
   websocket.addEventListener("message", (ev) => {
     const parsed = schema.safeParse(JSON.parse(ev.data));
