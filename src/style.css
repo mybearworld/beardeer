@@ -28,3 +28,54 @@ body {
   font-family: "Noto Sans", sans-serif, serif, "Noto Color Emoji",
     "sitelen seli kiwen";
 }
+.hidden {
+  display: none !important;
+}
+
+a {
+  color: var(--deer-foreground);
+}
+button {
+  background-color: var(--deer-button);
+  color: var(--deer-foreground);
+  border: none;
+  border-radius: 4px;
+  padding: 8px;
+  font-family: "Noto Sans", sans-serif, serif, "sitelen seli kiwen";
+  margin-bottom: 4px;
+}
+button:hover {
+  cursor: pointer;
+  background-color: var(--deer-button-hover);
+}
+button:disabled,
+button[disabled] {
+  cursor: not-allowed;
+  background-color: var(--deer-button-disabled);
+}
+input {
+  border: none;
+  border-radius: 4px;
+  padding: 8px;
+  font-family: "Noto Sans", sans-serif, serif, "sitelen seli kiwen";
+  font-size: 14px;
+  margin-bottom: 4px;
+  vertical-align: middle;
+  resize: none;
+  background-color: var(--deer-button-hover);
+  color: var(--deer-foreground);
+}
+
+#register-login {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+#rl-login-container,
+#rl-signup-container,
+#rl-bottom-row {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+}

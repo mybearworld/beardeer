@@ -1,3 +1,6 @@
+import { switchToScene } from "./lib/scene";
 import "./style.css";
+import "./scenes/mainScene";
+import "./scenes/registerLogin";
 
-document.querySelector("#app")!.textContent = "Hello, world!";
+switchToScene("register-login");

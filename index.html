@@ -6,7 +6,62 @@
     <title>BearDeer</title>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div class="scene">
+        <div id="register-login" class="hidden">
+          <div id="rl-button-row">
+            <button id="rl-t-login">Login</button>
+            <button id="rl-t-signup">Signup</button>
+            <button id="rl-t-guest">Guest</button>
+          </div>
+          <div id="rl-login-container">
+            <input
+              id="rl-username"
+              placeholder="Username..."
+              type="text"
+              maxlength="20"
+            />
+            <input id="rl-password" placeholder="Password..." type="password" />
+            <button id="rl-login-button">Log in</button>
+          </div>
+          <div id="rl-signup-container" class="hidden">
+            <input
+              id="rl-username-s"
+              autocomplete="off"
+              placeholder="Username..."
+              type="text"
+              maxlength="20"
+            />
+            <input
+              id="rl-password-s"
+              autocomplete="off"
+              placeholder="Password..."
+              type="password"
+            />
+            <input
+              id="rl-invitecode"
+              autocomplete="off"
+              placeholder="Invite code..."
+              type="text"
+              maxlength="16"
+            />
+            <button class="rl-button" onclick="register();">Sign up</button>
+          </div>
+          <div id="rl-bottom-row">
+            <div>
+              Please ensure you have read the
+              <a href="https://soktdeer.com/guidelines">GUIDELINES</a>.
+            </div>
+            <button>Set a custom server URL</button>
+            <small id="rl-version"></small>
+          </div>
+        </div>
+        <div id="main-scene" class="hidden">
+          Hello! Your username is
+          <span id="ms-username"></span>.
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

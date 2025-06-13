@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      zod:
+        specifier: ^3.25.64
+        version: 3.25.64
     devDependencies:
       typescript:
         specifier: ~5.8.3
@@ -362,6 +366,9 @@ packages:
       yaml:
         optional: true
 
+  zod@3.25.64:
+    resolution: {integrity: sha512-hbP9FpSZf7pkS7hRVUrOjhwKJNyampPgtXKc3AN6DsWtoHsg2Sb4SQaS4Tcay380zSwd2VPo9G9180emBACp5g==}
+
 snapshots:
 
   '@esbuild/aix-ppc64@0.25.5':
@@ -593,3 +600,5 @@ snapshots:
       tinyglobby: 0.2.14
     optionalDependencies:
       fsevents: 2.3.3
+
+  zod@3.25.64: {}
