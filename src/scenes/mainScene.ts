@@ -426,6 +426,9 @@ const postElement = (post: Post) => {
     },
   );
   initialUserInfo.then((initialUserInfo) => {
+    select("span", ".post-reply-button-area", element).classList.remove(
+      "hidden",
+    );
     if (
       initialUserInfo.username === post.author.username ||
       initialUserInfo.permissions.includes("DELETE")
