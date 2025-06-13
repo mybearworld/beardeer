@@ -2,7 +2,7 @@ import { z } from "zod/v4";
 import { select } from "../lib/elements";
 import { onScene, switchToScene } from "../lib/scene";
 import { userSchema } from "../lib/schemas";
-import { getSetting, setSetting } from "../lib/settings";
+import { getSetting, setSetting, themes } from "../lib/settings";
 import { initialUserInfo, send } from "../lib/ws";
 
 const root = select("div", "#main-config");
@@ -21,6 +21,8 @@ const elements = {
   lastfm: select("input", "#mc-lastfm", root),
   buttonLastfm: select("button", "#mc-button-lastfm", root),
   enterSends: select("input", "#mc-enter-sends", root),
+  selectedTheme: select("span", "#mc-selected-theme", root),
+  themes: select("div", "#mc-themes", root),
 } as const;
 
 elements.buttonBack.addEventListener("click", () => {
@@ -29,6 +31,7 @@ elements.buttonBack.addEventListener("click", () => {
 
 onScene("main-config", async () => {
   elements.enterSends.checked = getSetting("enterSends");
+  elements.selectedTheme.textContent = getSetting("theme");
   const username = (await initialUserInfo).username;
   const user = await send(
     { command: "get_user", username },
@@ -69,4 +72,14 @@ elements.buttonLastfm.addEventListener("click", () =>
 
 elements.enterSends.addEventListener("input", () => {
   setSetting("enterSends", elements.enterSends.checked);
+});
+
+themes.forEach((theme) => {
+  const button = document.createElement("button");
+  button.textContent = theme;
+  button.addEventListener("click", () => {
+    setSetting("theme", theme);
+    elements.selectedTheme.textContent = theme;
+  });
+  elements.themes.append(button);
 });

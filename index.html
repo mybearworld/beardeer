@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" c />
     <title>BearDeer</title>
+    <style id="theme"></style>
   </head>
   <body>
     <div id="app">
@@ -270,6 +271,24 @@
               <input type="checkbox" id="mc-enter-sends" />
               Enter sends post
             </label>
+          </div>
+          <div class="mc-container">
+            <h2>Theme</h2>
+            <div class="mc-theme-preview">
+              <div class="mc-preview-error">Error bar</div>
+              <div class="mc-preview-content">
+                <button>Button</button> <button disabled>Disabled</button><br />
+                <div class="mc-preview-post">
+                  <img
+                    src="https://deer.goog-search.eu.org/assets/icon256.png"
+                    class="pfp"
+                  />
+                  <span> Post example<br />Lorem ipsum, dolor sit amet.</span>
+                </div>
+              </div>
+            </div>
+            Selected theme: <span id="mc-selected-theme"></span>
+            <div id="mc-themes"></div>
           </div>
         </div>
       </div>

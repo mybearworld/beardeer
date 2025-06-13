@@ -1,7 +1,33 @@
 import { z } from "zod/v4";
+import { select } from "./elements";
+import bright from "../themes/bright.css?inline";
+import cosmicLatte from "../themes/cosmic-latte.css?inline";
+import deer from "../themes/deer.css?inline";
+import helium from "../themes/helium.css?inline";
+import midnight from "../themes/midnight.css?inline";
+import roarer1 from "../themes/roarer1.css?inline";
+import souple from "../themes/souple.css?inline";
+
+const elements = {
+  theme: select("style", "#theme"),
+} as const;
+
+const themesObject = {
+  Deer: deer,
+  Helium: helium,
+  Midnight: midnight,
+  Bright: bright,
+  "Cosmic Latte": cosmicLatte,
+  "Roarer 1": roarer1,
+  Souple: souple,
+} as const;
+export const themes = Object.keys(
+  themesObject,
+) as readonly (keyof typeof themesObject)[];
 
 const settingsSchema = z.object({
   enterSends: z.boolean(),
+  theme: z.enum(themes),
 });
 
 export type Settings = z.infer<typeof settingsSchema>;
@@ -9,6 +35,7 @@ export type Setting = keyof Settings;
 
 const defaultSettings: Settings = {
   enterSends: true,
+  theme: "Deer",
 };
 
 let settings: Partial<Settings> = {};
@@ -28,4 +55,9 @@ export const setSetting = <TSetting extends Setting>(
 ) => {
   settings[setting] = value;
   localStorage.setItem("beardeer:settings", JSON.stringify(settings));
+  if (setting === "theme") {
+    elements.theme.innerHTML = themesObject[value as Settings["theme"]];
+  }
 };
+
+elements.theme.innerHTML = themesObject[getSetting("theme")];

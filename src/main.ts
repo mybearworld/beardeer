@@ -5,5 +5,6 @@ import "./scenes/mainInbox";
 import "./scenes/mainScene";
 import "./scenes/registerLogin";
 import "./scenes/userDisplay";
+import "./lib/settings"; // side effect: initiates theming
 
 switchToScene("register-login");
