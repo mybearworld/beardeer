@@ -6,8 +6,8 @@
     <title>BearDeer</title>
     <style id="theme"></style>
     <style id="custom-css"></style>
-    <script type="module" crossorigin src="/beardeer/assets/index-DJxlXOiq.js"></script>
-    <link rel="stylesheet" crossorigin href="/beardeer/assets/index-DAPhzGz7.css">
+    <script type="module" crossorigin src="/beardeer/assets/index-DfyAwFVt.js"></script>
+    <link rel="stylesheet" crossorigin href="/beardeer/assets/index-m5IaZ-Pz.css">
   </head>
   <body>
     <div id="app">
@@ -161,6 +161,14 @@
                           Reply
                         </button>
                       </span>
+                      <span class="post-edit-button-area hidden">
+                        -
+                        <button
+                          class="post-edit-button no-button-styles link-styles"
+                        >
+                          Edit
+                        </button>
+                      </span>
                       <span class="post-delete-button-area hidden">
                         -
                         <button
@@ -174,6 +182,14 @@
                 </div>
                 <div class="post-replies"></div>
                 <div class="post-content"></div>
+                <div class="hidden post-content-editing">
+                  <textarea
+                    class="post-content-editing-textarea"
+                    rows="1"
+                  ></textarea>
+                  <button class="post-content-editing-ok">Ok</button>
+                  <button class="post-content-editing-cancel">Cancel</button>
+                </div>
                 <div class="post-attachments"></div>
               </div>
             </template>
