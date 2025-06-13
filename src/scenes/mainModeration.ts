@@ -16,6 +16,8 @@ const elements = {
   forcekick: select("button", "#mm-forcekick", root),
   inboxMessage: select("input", "#mm-inbox-message", root),
   inbox: select("button", "#mm-inbox", root),
+  ipsUsername: select("input", "#mm-ips-username", root),
+  ips: select("button", "#mm-ips", root),
 } as const;
 
 elements.buttonBack.addEventListener("click", () => {
@@ -79,4 +81,17 @@ elements.inbox.addEventListener("click", async () => {
   ) {
     elements.inboxMessage.value = "";
   }
+});
+
+elements.ips.addEventListener("click", async () => {
+  const ips = await send(
+    { command: "get_ips", username: elements.ipsUsername.value },
+    z.object({ ips: z.string().array() }),
+  );
+  if (!ips) return;
+  alert(
+    `${elements.ipsUsername.value}'s recent IPs are:\n` +
+      ips.ips.map((s) => `- ${s}`).join("\n"),
+  );
+  elements.inboxMessage.value = "";
 });
