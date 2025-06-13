@@ -24,6 +24,8 @@ const elements = {
   selectedTheme: select("span", "#mc-selected-theme", root),
   themes: select("div", "#mc-themes", root),
   customCSS: select("textarea", "#mc-custom-css", root),
+  deleteAccountPassword: select("input", "#mc-delete-account-password", root),
+  buttonDeleteAccount: select("button", "#mc-delete-account", root),
 } as const;
 
 elements.buttonBack.addEventListener("click", () => {
@@ -87,4 +89,19 @@ themes.forEach((theme) => {
 });
 elements.customCSS.addEventListener("input", () => {
   setSetting("customCSS", elements.customCSS.value);
+});
+
+elements.buttonDeleteAccount.addEventListener("click", async () => {
+  if (
+    await send(
+      {
+        command: "delete_account",
+        password: elements.deleteAccountPassword.value,
+      },
+      z.object({}),
+    )
+  ) {
+    localStorage.removeItem("beardeer:token");
+    location.reload();
+  }
 });
