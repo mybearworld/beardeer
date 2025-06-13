@@ -50,6 +50,7 @@ p {
   margin-block: 0;
 }
 .no-button-styles {
+  text-align: inherit;
   background-color: transparent;
   color: inherit;
   font-family: inherit;
@@ -194,4 +195,19 @@ textarea {
   font-style: italic;
   font-size: smaller;
   color: var(--deer-reply);
+}
+#user-display:not(.hidden) #ud-row {
+  z-index: 1;
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  height: 42px;
+}
+#user-display:not(.hidden) #ud-iframe {
+  border: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
 }

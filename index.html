@@ -136,13 +136,15 @@
             <template id="ms-post-template">
               <div class="post">
                 <div class="post-top">
-                  <img class="pfp" />
+                  <button class="post-pfp no-button-styles">
+                    <img class="pfp" />
+                  </button>
                   <div>
-                    <span>
+                    <button class="post-author no-button-styles">
                       <b class="post-display-name"></b> (<span class="mono"
                         >@<span class="post-username"></span></span
                       >)
-                    </span>
+                    </button>
                     <div class="post-top-second-part">
                       <span class="post-date"></span>
                       <span class="post-reply-button-area hidden">
@@ -185,6 +187,12 @@
             <button id="mi-button-back">Go back</button>
           </div>
           <div id="mi-posts"></div>
+        </div>
+        <div id="user-display" class="hidden">
+          <div id="ud-row">
+            <button id="ud-button-back">Go back</button>
+          </div>
+          <iframe id="ud-iframe" src="./userIframe.html"></iframe>
         </div>
       </div>
     </div>

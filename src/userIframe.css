@@ -1,0 +1,107 @@
+@import url("themes/deer.css");
+
+@font-face {
+  font-family: "Noto Sans";
+  src: url("assets/notosans/NotoSans-VariableFont_wdth,wght.ttf");
+}
+@font-face {
+  font-family: "Noto Sans";
+  font-style: italic;
+  src: url("assets/notosans/NotoSans-Italic-VariableFont_wdth,wght.ttf");
+}
+@font-face {
+  font-family: "sitelen seli kiwen";
+  src: url("assets/sitelenselikiwen/sitelenselikiwenjuniko.ttf");
+  size-adjust: 130%;
+  unicode-range: U+F????;
+}
+@font-face {
+  font-family: "Noto Color Emoji";
+  src: url("assets/notocoloremoji/NotoColorEmoji-Regular-NoSVG.ttf");
+}
+
+body {
+  background-color: var(--deer-background);
+  color: var(--deer-foreground);
+  margin: 0;
+  font-family: "Noto Sans", sans-serif, serif, "Noto Color Emoji",
+    "sitelen seli kiwen";
+}
+.hidden {
+  display: none;
+}
+
+.scene {
+  margin: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#ud-banner.has-banner {
+  padding-left: 10px;
+  padding-right: 10px;
+  position: relative;
+  /* stolen from @waso */
+  height: 150px;
+  padding-top: 100px;
+  box-sizing: border-box;
+  background-size: cover;
+  background-position: center;
+}
+#ud-banner.has-banner::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#0000, #000a);
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
+#ud-info {
+  position: relative;
+  z-index: 2;
+}
+#ud-lastfm-container {
+  width: 100%;
+  padding: 6px;
+  border-radius: 4px;
+  margin-top: 8px;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  box-sizing: border-box;
+  background-color: var(--deer-button-hover);
+}
+#ud-bio-container {
+  width: 100%;
+  padding: 6px;
+  border-radius: 4px;
+  margin-top: 8px;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  box-sizing: border-box;
+  background-color: var(--deer-button-hover);
+}
+#ud-bio p {
+  padding: 0;
+  margin: 0;
+}
+#ud-bio h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 2px;
+}
+.pfp {
+  border-radius: 100%;
+  width: 36px;
+  height: 36px;
+  float: left;
+  margin-right: 8px;
+  margin-top: 2px;
+  border: 2px solid var(--deer-image-border);
+}

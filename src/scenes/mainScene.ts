@@ -1,5 +1,9 @@
 import { z } from "zod/v4";
-import { switchToScene } from "../lib/scene";
+import {
+  openProfile,
+  switchToProfile as switchToProfile,
+  switchToScene,
+} from "../lib/scene";
 import { postSchema, ulistSchema, type Post, type Ulist } from "../lib/schemas";
 import { clone, select } from "../lib/elements";
 import { startupInfo, initialUserInfo, listen, send } from "../lib/ws";
@@ -355,10 +359,14 @@ const updateUlist = (ulist: Ulist) => {
   }
   elements.ulist.textContent = `${entries.length} users online (`;
   entries.forEach(([name, { client }], i) => {
-    const span = document.createElement("span");
-    span.textContent = name + " " + clientIcon(client);
-    span.title = client || "";
-    elements.ulist.append(span);
+    const button = document.createElement("button");
+    button.classList.add("no-button-styles");
+    button.textContent = name + " " + clientIcon(client);
+    button.addEventListener("click", () => {
+      switchToProfile(name);
+    });
+    button.title = client || "";
+    elements.ulist.append(button);
     if (i !== entries.length - 1) {
       elements.ulist.append(", ");
     }
@@ -369,9 +377,15 @@ const updateUlist = (ulist: Ulist) => {
 const postElement = (post: Post) => {
   const element = select("div", ".post", clone(elements.postTemplate));
   select("img", ".pfp", element).src = post.author.avatar;
+  select("button", ".post-pfp", element).addEventListener("click", () => {
+    switchToProfile(post.author.username);
+  });
   select("b", ".post-display-name", element).textContent =
     post.author.display_name;
   select("span", ".post-username", element).textContent = post.author.username;
+  select("button", ".post-author", element).addEventListener("click", () => {
+    switchToProfile(post.author.username);
+  });
   select("span", ".post-date", element).textContent =
     post.created.toLocaleString();
   select("p", ".post-content", element).textContent = post.content;

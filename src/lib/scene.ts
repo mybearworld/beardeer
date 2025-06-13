@@ -26,3 +26,10 @@ export const onSceneOnce = (scene: string, listener: () => void) => {
     sceneListeners.get(scene)?.delete(listener);
   });
 };
+
+let _openProfile = "";
+export const openProfile = () => _openProfile;
+export const switchToProfile = (openProfile: string) => {
+  _openProfile = openProfile;
+  switchToScene("user-display");
+};

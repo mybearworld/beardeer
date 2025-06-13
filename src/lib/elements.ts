@@ -1,7 +1,7 @@
 export const select = <H extends keyof HTMLElementTagNameMap>(
   elementName: H,
   query: string,
-  base?: Element | DocumentFragment
+  base?: Element | DocumentFragment | Document,
 ) => {
   const element = (base || document).querySelector(query);
   if (element === null) {
@@ -9,7 +9,7 @@ export const select = <H extends keyof HTMLElementTagNameMap>(
   }
   if (element.tagName !== elementName.toUpperCase()) {
     throw new Error(
-      `Element ${query} is not a ${elementName}, but a ${element.tagName.toLowerCase()}.`
+      `Element ${query} is not a ${elementName}, but a ${element.tagName.toLowerCase()}.`,
     );
   }
   return element as HTMLElementTagNameMap[H];

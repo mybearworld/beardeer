@@ -12,8 +12,9 @@ export const userSchema = z.object({
   profile: z.object({
     bio: z.string(),
     lastfm: z.string(),
+    css: z.string().optional(),
   }),
-  // todo: css and banner
+  banner: z.string().optional(),
 });
 export type User = z.infer<typeof userSchema>;
 
