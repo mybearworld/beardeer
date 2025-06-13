@@ -83,7 +83,6 @@ textarea {
   padding: 8px;
   font-family: "Noto Sans", sans-serif, serif, "sitelen seli kiwen";
   font-size: 14px;
-  margin-bottom: 4px;
   vertical-align: middle;
   resize: none;
   background-color: var(--deer-button-hover);
@@ -330,7 +329,8 @@ td {
   word-break: break-word;
   overflow-wrap: break-word;
   box-sizing: border-box;
-  display: inline-block;
+  display: inline-flex;
+  gap: 0.5rem;
   vertical-align: top;
   flex-grow: 1;
   flex-shrink: 0;

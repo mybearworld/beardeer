@@ -10,6 +10,8 @@ const elements = {
   banDate: select("input", "#mm-ban-date", root),
   banReason: select("input", "#mm-ban-reason", root),
   ban: select("button", "#mm-ban", root),
+  generateInviteCode: select("button", "#mm-generate-invite-code", root),
+  resetInviteCodes: select("button", "#mm-reset-invite-codes", root),
 } as const;
 
 elements.buttonBack.addEventListener("click", () => {
@@ -34,4 +36,16 @@ elements.ban.addEventListener("click", async () => {
     elements.banDate.value = "";
     elements.banReason.value = "";
   }
+});
+
+elements.generateInviteCode.addEventListener("click", async () => {
+  const invite = await send(
+    { command: "gen_invite" },
+    z.object({ invite_code: z.string() }),
+  );
+  if (!invite) return;
+  alert("Your invite code is: " + invite.invite_code);
+});
+elements.resetInviteCodes.addEventListener("click", async () => {
+  await send({ command: "reset_invites" }, z.object({}));
 });
