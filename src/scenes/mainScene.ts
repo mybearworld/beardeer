@@ -68,7 +68,7 @@ initialUserInfo.then((initialUserInfo) => {
 });
 startupInfo.then((startupInfo) => {
   startupInfo.messages.forEach((post) => {
-    const element = postElement(post);
+    const element = postElement(post, false);
     posts[post._id] = { element, data: post, replies: [] };
     elements.posts.append(element);
   });
@@ -301,7 +301,7 @@ listen(
     origin: z.literal("livechat").optional(),
   }),
   (packet) => {
-    const element = postElement(packet.data);
+    const element = postElement(packet.data, !!packet.origin);
     posts[packet.data._id] = { element, data: packet.data, replies: [] };
     (packet.origin ?
       elements.livechatPosts
@@ -406,7 +406,7 @@ const updateUlist = (ulist: Ulist) => {
   elements.ulist.append(")");
 };
 
-const postElement = (post: Post) => {
+const postElement = (post: Post, isLiveChat: boolean) => {
   const element = select("div", ".post", clone(elements.postTemplate));
   select("img", ".pfp", element).src = post.author.avatar;
   select("button", ".post-pfp", element).addEventListener("click", () => {
@@ -476,14 +476,15 @@ const postElement = (post: Post) => {
     select("span", ".post-reply-button-area", element).classList.remove(
       "hidden",
     );
-    if (initialUserInfo.username === post.author.username) {
+    if (!isLiveChat && initialUserInfo.username === post.author.username) {
       select("span", ".post-edit-button-area", element).classList.remove(
         "hidden",
       );
     }
     if (
-      initialUserInfo.username === post.author.username ||
-      initialUserInfo.permissions.includes("DELETE")
+      !isLiveChat &&
+      (initialUserInfo.username === post.author.username ||
+        initialUserInfo.permissions.includes("DELETE"))
     ) {
       select("span", ".post-delete-button-area", element).classList.remove(
         "hidden",
