@@ -1,0 +1,100 @@
+@import "./deer.css";
+@import url("https://fonts.googleapis.com/css2?family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap");
+*:not(.material-symbols-outlined) {
+  font-family: "Rethink Sans", sans-serif !important;
+}
+.mc-container {
+  border-radius: 16px;
+  background: rgba(30, 30, 30, 1);
+  padding-left: 12px;
+  padding: 12px;
+  padding-bottom: 8px;
+}
+.post {
+  border-radius: 16px;
+  background: linear-gradient(
+    180deg,
+    rgba(65, 65, 65, 1) 0%,
+    rgba(55, 55, 55, 1) 100%
+  );
+  border: 1px solid var(--deer-horizontalrule);
+  -webkit-box-shadow:
+    #000 0 1px 0,
+    0 1px 3px black;
+  -moz-box-shadow:
+    #000 0 1px 0,
+    0 1px 3px black;
+  box-shadow:
+    #000 0 1px 0,
+    0 1px 3px black;
+  transition: box-shadow 0.3s ease-in-out;
+  overflow: hidden;
+}
+input,
+textarea {
+  border-radius: 16px;
+  padding: 8px;
+  margin-bottom: 4px;
+  vertical-align: middle;
+  font-size: 13.3333px;
+  background: linear-gradient(
+    180deg,
+    rgba(63, 63, 63, 1) 0%,
+    rgba(50, 50, 50, 1) 100%
+  );
+  border: 1px solid var(--deer-horizontalrule);
+  -webkit-box-shadow:
+    #000 0 1px 0,
+    0 1px 3px black;
+  -moz-box-shadow:
+    #000 0 1px 0,
+    0 1px 3px black;
+  box-shadow:
+    #000 0 1px 0,
+    0 1px 3px black;
+  transition: box-shadow 0.3s ease-in-out;
+  overflow: hidden;
+}
+textarea.big-textarea {
+  min-width: 95vh;
+  min-height: 300px;
+  vertical-align: middle;
+  overflow-y: scroll;
+}
+button {
+  border-radius: 8px;
+  background: linear-gradient(
+    180deg,
+    rgba(68, 68, 68, 1) 0%,
+    rgba(55, 55, 55, 1) 100%
+  );
+  border: 1px solid var(--deer-horizontalrule);
+  -webkit-box-shadow:
+    #000 0 1px 0,
+    0 1px 3px black;
+  box-shadow:
+    #000 0 1px 0,
+    0 1px 3px black;
+  border-top: 1px solid #fff3;
+  transition: background 0.3s ease-in-out;
+}
+#error-bar {
+  background-color: #f0e68c;
+  color: #000000;
+}
+#mc-danger-container {
+  background-color: #311b1b;
+  border-radius: 16px;
+  padding: 12px;
+}
+textarea:focus {
+  outline: none;
+  -webkit-box-shadow:
+    #000 0 1px 0,
+    0 1px 3px black,
+    0 0 4px;
+  box-shadow:
+    #000 0 1px 0,
+    0 1px 3px black,
+    0 2px 5px;
+}

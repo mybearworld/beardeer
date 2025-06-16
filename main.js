@@ -74,6 +74,7 @@ let themes = {
   "cosmic-latte": "Cosmic Latte",
   roarer1: "Roarer 1",
   souple: "Souple",
+  dusk: "Dusk (rethinkdeer)",
 };
 
 let replace_text = false;
@@ -235,7 +236,7 @@ stgsTriggers();
 
 async function uploadFile(file) {
   // ORIGINAL CREDIT TO:
-  // @stripes on SoktDeer
+  // @legoshi on ChaosDeer
   // @sandstripes on GitHub
   // https://gist.github.com/sandstripes/7d342a06cc8325f272cd42d6442f6466
   // note: very much so modified since then, mainly because i need to use imgbb because cors sucks
@@ -650,6 +651,7 @@ const clientIcon = (c) =>
   : c.startsWith("Kansas") ? " 🇺🇸"
   : c.startsWith("whitetail") ? "🦨"
   : c.startsWith("CiaoTk") ? "⚽"
+  : c.startsWith("neuoClient") ? "🔵"
   : c === "Unknown" ? "❓"
   : "🤖";
 
@@ -1826,6 +1828,4 @@ setInterval(ping, 2500);
 
     actuallyLoadPost(resf, isFetch, isInbox);
   };
-
-  // Your code here...
 })();
