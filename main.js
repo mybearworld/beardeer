@@ -962,12 +962,14 @@ function loadPost(resf, isFetch, isInbox) {
   }
   if ((resf.author?.username == username || delete_all) && !isInbox) {
     postDetails.innerHTML += ` - <span class="text-clickable" onclick="deletepost(${hescape(JSON.stringify(resf._id))});">Delete</span>`;
-    if (resf.author?.username == "thebarney86") {
-      const btn = document.createElement("button");
-      btn.classList.add("barney-delete");
-      btn.addEventListener("click", () => deletepost(resf._id));
-      post.appendChild(btn);
-    }
+  }
+  if (resf.author?.username == "thebarney86") {
+    const btn = document.createElement("button");
+    btn.classList.add("barney-delete");
+    btn.addEventListener("click", () => {
+      post.style.display = "none";
+    });
+    post.appendChild(btn);
   }
   if (username && !isInbox) {
     postDetails.innerHTML += ` - <span class="text-clickable" onclick="reactpost(${hescape(JSON.stringify(resf._id))})">React</span>`;
