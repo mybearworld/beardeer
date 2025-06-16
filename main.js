@@ -478,7 +478,12 @@ ws.onmessage = function (event) {
     document.getElementById("mc-display-name").value =
       incoming.user.display_name;
     document.getElementById("mc-color").value = incoming.user.profile?.color;
-    document.getElementById("mc-font").value = incoming.user.profile?.font;
+    document.getElementById("mc-font").value =
+      incoming.user.profile?.font ?? "";
+    if (incoming.user.profile?.weight) {
+      document.getElementById("mc-weight").value =
+        incoming.user.profile?.weight;
+    }
     document.getElementById("mc-avatar").value = incoming.user.avatar;
     document.getElementById("mc-banner").value = incoming.user.banner || "";
     document.getElementById("mc-css").value = incoming.user.profile?.css || "";
@@ -525,6 +530,7 @@ ws.onmessage = function (event) {
       displayName.style.fontFamily = incoming.user.profile?.font || "";
       displayName.style.color = incoming.user.color || "";
       displayName.style.textShadow = incoming.user.profile?.shadow || "";
+      displayName.style.fontWeight = incoming.user.profile?.weight || "";
     }
     idocument.getElementById("ud-username").innerText =
       "@" + incoming.user.username;
@@ -937,6 +943,7 @@ function loadPost(resf, isFetch, isInbox) {
       displayName.style.fontFamily = resf.author.profile?.font || "";
       displayName.style.color = resf.author.color || "";
       displayName.style.textShadow = resf.author.profile?.shadow || "";
+      displayName.style.fontWeight = resf.author.profile?.weight || "";
     }
     if (resf.author.bot) {
       postUsername.innerHTML +=

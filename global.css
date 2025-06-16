@@ -68,7 +68,8 @@ button[disabled] {
   cursor: not-allowed;
 }
 input,
-textarea {
+textarea,
+select {
   width: 180px;
   box-sizing: border-box;
   border: none;
@@ -79,6 +80,9 @@ textarea {
   margin-bottom: 4px;
   vertical-align: middle;
   resize: none;
+}
+option {
+  font: inherit;
 }
 textarea.big-textarea {
   min-width: 180px;
@@ -436,7 +440,8 @@ button[disabled] {
   background-color: var(--deer-button-disabled);
 }
 input,
-textarea {
+textarea,
+select {
   background-color: var(--deer-button-hover);
   color: var(--deer-foreground);
 }

@@ -257,6 +257,22 @@
           <input id="mc-font" placeholder="Display name font..." type="text" />
           <button onclick="setProperty('font');">Set display name font</button>
           <br />
+          <select id="mc-weight" type="text">
+            <option value="100">Thin</option>
+            <option value="200">Extra Light</option>
+            <option value="300">Light</option>
+            <option value="400" selected>Normal</option>
+            <option value="500">Medium</option>
+            <option value="600">Semi-Bold</option>
+            <option value="700">Bold</option>
+            <option value="800">Extra Bold</option>
+            <option value="900">Black</option>
+            <option value="950">Extra Black</option>
+          </select>
+          <button onclick="setProperty('weight');">
+            Set display name weight
+          </button>
+          <br />
           <input
             id="mc-avatar"
             placeholder="Avatar URL..."
