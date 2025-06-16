@@ -1442,12 +1442,16 @@ function editpost(id) {
 
 function removepost(id, dba) {
   try {
-    document.getElementById(id).classList.remove("post");
+    const post = document.getElementById(id);
+    post.classList.remove("post");
+    post.style.background = "";
+    post.style.border = "";
+    post.classList.remove("light-bg");
     if (dba) {
-      document.getElementById(id).innerHTML =
+      post.innerHTML =
         "<small class='reply' style='vertical-align:top;'><i>post deleted by author</i></small>";
     } else {
-      document.getElementById(id).innerHTML =
+      post.innerHTML =
         "<small class='reply' style='vertical-align:top;'><i>post deleted by moderator</i></small>";
     }
     var repliesMade = document.getElementsByClassName("reply-" + id);
