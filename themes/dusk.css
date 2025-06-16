@@ -1,67 +1,84 @@
-@import url('https://fonts.googleapis.com/css2?family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap");
 *:not(.material-symbols-outlined) {
-            font-family: 'Rethink Sans', sans-serif !important;
-        }
+  font-family: "Rethink Sans", sans-serif !important;
+}
 .mc-container {
-border-radius: 16px;
-background: rgba(30, 30, 30, 1);
-padding-left: 12px;
-padding: 12px;
-padding-bottom: 8px;
+  border-radius: 16px;
+  background: rgba(30, 30, 30, 1);
+  padding-left: 12px;
+  padding: 12px;
+  padding-bottom: 8px;
 }
 .post {
-border-radius: 16px;
-background: linear-gradient(180deg,rgba(65, 65, 65, 1) 0%, rgba(55, 55, 55, 1) 100%);
+  border-radius: 16px;
+  background: linear-gradient(
+    180deg,
+    rgba(65, 65, 65, 1) 0%,
+    rgba(55, 55, 55, 1) 100%
+  );
 }
-input, textarea {
-border-radius: 16px;
-background: linear-gradient(180deg,rgba(63, 63, 63, 1) 0%, rgba(50, 50, 50, 1) 100%);
+input,
+textarea {
+  border-radius: 16px;
+  background: linear-gradient(
+    180deg,
+    rgba(63, 63, 63, 1) 0%,
+    rgba(50, 50, 50, 1) 100%
+  );
 }
 textarea.big-textarea {
-    min-width: 95vh;
-    min-height: 300px;
-    vertical-align: middle;
+  min-width: 95vh;
+  min-height: 300px;
+  vertical-align: middle;
 }
 button {
-border-radius: 8px;
-background: linear-gradient(180deg,rgba(68, 68, 68, 1) 0%, rgba(55, 55, 55, 1) 100%);
+  border-radius: 8px;
+  background: linear-gradient(
+    180deg,
+    rgba(68, 68, 68, 1) 0%,
+    rgba(55, 55, 55, 1) 100%
+  );
 }
 #error-bar {
-background-color: #F0E68C;
-color: #000000;
+  background-color: #f0e68c;
+  color: #000000;
 }
 #mc-danger-container {
-background-color: #311b1b;
-border-radius: 16px;
-padding: 12px;
+  background-color: #311b1b;
+  border-radius: 16px;
+  padding: 12px;
 }
 #ud-bio-container {
-border-radius: 16px;
-background: linear-gradient(180deg,rgba(45, 45, 45, 1) 0%, rgba(35, 35, 35, 1) 100%);
-padding-left: 12px !important;
-padding: 12px;
-padding-bottom: 8px;
+  border-radius: 16px;
+  background: linear-gradient(
+    180deg,
+    rgba(45, 45, 45, 1) 0%,
+    rgba(35, 35, 35, 1) 100%
+  );
+  padding-left: 12px !important;
+  padding: 12px;
+  padding-bottom: 8px;
 }
 #ud-banner.has-banner {
-border-radius: 16px;
-border: 1px solid #434343;
+  border-radius: 16px;
+  border: 1px solid #434343;
 }
 body {
-background: #121212;
+  background: #121212;
 }
 #ud-permissions {
-color: #d09fff;
+  color: #d09fff;
 }
 #ud-display-name {
-    font-style: italic;
-    font-weight: bold;
-    background: -webkit-linear-gradient(#ffa2a2, #c260ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  font-style: italic;
+  font-weight: bold;
+  background: -webkit-linear-gradient(#ffa2a2, #c260ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 #ud-username {
-    opacity: 50%;
+  opacity: 50%;
 }
 button.barney {
-opacity: 0%;
+  opacity: 0%;
 }
