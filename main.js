@@ -16,12 +16,14 @@ const md = markdownit({
 }).disable("image");
 
 const hescape = (s) =>
-  s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
+  s ?
+    s
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;")
+  : s;
 
 document.getElementById("rl-username").value = "";
 document.getElementById("rl-password").value = "";
