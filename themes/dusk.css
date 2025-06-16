@@ -1,3 +1,4 @@
+@import "./dusk.css";
 @import url("https://fonts.googleapis.com/css2?family=Rethink+Sans:ital,wght@0,400..800;1,400..800&display=swap");
 *:not(.material-symbols-outlined) {
   font-family: "Rethink Sans", sans-serif !important;
