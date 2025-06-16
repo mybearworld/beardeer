@@ -1,3 +1,4 @@
+@import "./dusk.css";
 *:not(.material-symbols-outlined) {
             font-family: 'Rethink Sans', sans-serif !important;
         }
