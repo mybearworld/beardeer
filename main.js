@@ -649,6 +649,7 @@ const clientIcon = (c) =>
   : c.startsWith("PresetDeer ") ? " 🧩"
   : c.startsWith("Kansas") ? " 🇺🇸"
   : c.startsWith("whitetail") ? "🦨"
+  : c.startsWith("CiaoTk") ? "⚽"
   : c === "Unknown" ? "❓"
   : "🤖";
 
