@@ -1009,7 +1009,7 @@ function loadPost(resf, isFetch, isInbox) {
     }
   }
 
-  var postContent = document.createElement("span");
+  var postContent = document.createElement("div");
   postContent.classList.add("post-content");
   postContent.setAttribute("id", "content-" + resf._id);
   if (!isInbox) {
