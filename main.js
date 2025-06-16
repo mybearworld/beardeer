@@ -964,12 +964,18 @@ function loadPost(resf, isFetch, isInbox) {
     postDetails.innerHTML += ` - <span class="text-clickable" onclick="deletepost(${hescape(JSON.stringify(resf._id))});">Delete</span>`;
   }
   if (resf.author?.username == "thebarney86") {
-    const btn = document.createElement("button");
-    btn.classList.add("barney-delete");
-    btn.addEventListener("click", () => {
+    const closeButton = document.createElement("button");
+    closeButton.classList.add("barney", "barney-delete");
+    closeButton.addEventListener("click", () => {
       post.style.display = "none";
     });
-    post.appendChild(btn);
+    const steamButton = document.createElement("button");
+    steamButton.classList.add("barney", "barney-steam");
+    steamButton.addEventListener("click", () => {
+      open("https://steamcommunity.com/id/barney86");
+    });
+    post.appendChild(closeButton);
+    post.appendChild(steamButton);
   }
   if (username && !isInbox) {
     postDetails.innerHTML += ` - <span class="text-clickable" onclick="reactpost(${hescape(JSON.stringify(resf._id))})">React</span>`;

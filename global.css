@@ -142,18 +142,27 @@ hr {
 .reactions button.reaction-author {
   border: 2px solid cornflowerblue;
 }
-button.barney-delete {
+button.barney {
   position: absolute;
-  top: 10px;
-  right: 10px;
   background-color: transparent;
   border: 0px;
+  padding: 0;
+  box-shadow: none;
+}
+button.barney:hover {
+  background-color: transparent;
+}
+button.barney.barney-delete {
+  top: 10px;
+  right: 10px;
   width: 14px;
   height: 14px;
-  padding: 0;
 }
-button.barney-delete:hover {
-  background-color: transparent;
+button.barney.barney-steam {
+  bottom: 5px;
+  right: 11px;
+  width: 80px;
+  height: 20px;
 }
 .mono {
   font-family: monospace;
