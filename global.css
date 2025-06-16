@@ -198,6 +198,7 @@ button.barney.barney-steam {
   flex-wrap: wrap;
   width: 60vw;
   gap: 0.1rem;
+  z-index: 1;
 }
 #ms-suggestions button {
   text-wrap: nowrap;
