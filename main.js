@@ -120,9 +120,18 @@ if (localStorage.getItem("beardeer:blockedThemeUsers")) {
   blocked_theme_users = JSON.parse(
     localStorage.getItem("beardeer:blockedThemeUsers"),
   );
+  if (Array.isArray(blocked_theme_users)) {
+    blocked_theme_users = Object.fromEntries(
+      blocked_theme_users.map((user) => [user, false]),
+    );
+    localStorage.setItem(
+      "beardeer:blockedThemeUsers",
+      JSON.stringify(blocked_theme_users),
+    );
+  }
 } else {
-  blocked_theme_users = [];
-  localStorage.setItem("beardeer:blockedThemeUsers", "[]");
+  blocked_theme_users = {};
+  localStorage.setItem("beardeer:blockedThemeUsers", "{}");
 }
 
 document.getElementById("top-style").href =
@@ -134,6 +143,7 @@ const settings_template = {
   upload_key: "",
   upload_service: "",
   enter_send: true,
+  display_post_themes: true,
 };
 
 if (localStorage.getItem("beardeer:settings") == null) {
@@ -181,6 +191,13 @@ function stgsTriggers() {
     document.getElementById("mc-button-enter-send").innerText =
       "(disabled) Enter sends post";
   }
+  if (settings.display_post_themes) {
+    document.getElementById("mc-button-display-post-themes").innerText =
+      "(enabled) Display post themes by default";
+  } else {
+    document.getElementById("mc-button-display-post-themes").innerText =
+      "(disabled) Display post themes by default";
+  }
   //if (settings.detect_file_type) {
   //detect_file_type = true;
   //document.getElementById("mc-button-detectft").innerText = "(enabled) Detect file types";
@@ -227,6 +244,8 @@ function updateStg(setting) {
     settings.presets = !settings.presets;
   } else if (setting == "enter_send") {
     settings.enter_send = !settings.enter_send;
+  } else if (setting == "display_post_themes") {
+    settings.display_post_themes = !settings.display_post_themes;
   }
   localStorage.setItem("beardeer:settings", JSON.stringify(settings));
   stgsTriggers();
@@ -525,7 +544,10 @@ ws.onmessage = function (event) {
     idocument.getElementById("ud-avatar").src = incoming.user.avatar;
     const displayName = idocument.getElementById("ud-display-name");
     displayName.innerText = incoming.user.display_name;
-    if (!blocked_theme_users.includes(incoming.user.username)) {
+    if (
+      blocked_theme_users[incoming.user.username] ??
+      settings.display_post_themes
+    ) {
       displayName.style.color = incoming.user.profile?.color ?? "";
       displayName.style.fontFamily = incoming.user.profile?.font || "";
       displayName.style.color = incoming.user.color || "";
@@ -939,7 +961,10 @@ function loadPost(resf, isFetch, isInbox) {
     var postUsername = document.createElement("span");
     postUsername.innerHTML = `<b>${hescape(resf.author.display_name)}</b> (<span class="mono">@${hescape(resf.author.username)}</span>)`;
     const displayName = postUsername.querySelector("b");
-    if (!blocked_theme_users.includes(resf.author.username)) {
+    if (
+      blocked_theme_users[resf.author.username] ??
+      settings.display_post_themes
+    ) {
       displayName.style.fontFamily = resf.author.profile?.font || "";
       displayName.style.color = resf.author.color || "";
       displayName.style.textShadow = resf.author.profile?.shadow || "";
@@ -1075,7 +1100,10 @@ function loadPost(resf, isFetch, isInbox) {
   } // this oneliner is ugly imo
   // :true:
 
-  if (!blocked_theme_users.includes(resf.author.username)) {
+  if (
+    blocked_theme_users[resf.author.username] ??
+    settings.display_post_themes
+  ) {
     post.style.background = resf.author.profile?.background || "";
     const match = resf.author.profile?.background?.match(
       /^#([a-f0-9][a-f0-9])([a-f0-9][a-f0-9])([a-f0-9][a-f0-9])/i,
@@ -1240,10 +1268,11 @@ function toggleProfileCSS() {
 
 function togglePostTheme() {
   const user = document.querySelector("#user-display").dataset.username;
-  if (blocked_theme_users.includes(user)) {
-    blocked_theme_users = blocked_theme_users.filter((u) => u !== user);
-  } else {
-    blocked_theme_users.push(user);
+  blocked_theme_users[user] = !(
+    blocked_theme_users[user] ?? settings.display_post_themes
+  );
+  if (blocked_theme_users[user] === settings.display_post_themes) {
+    delete blocked_theme_users[user];
   }
   localStorage.setItem(
     "beardeer:blockedThemeUsers",
