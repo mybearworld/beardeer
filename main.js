@@ -144,6 +144,7 @@ const settings_template = {
   upload_service: "",
   enter_send: true,
   display_post_themes: true,
+  uwu: false,
 };
 
 if (localStorage.getItem("beardeer:settings") == null) {
@@ -198,6 +199,11 @@ function stgsTriggers() {
     document.getElementById("mc-button-display-post-themes").innerText =
       "(disabled) Display post themes by default";
   }
+  if (settings.uwu) {
+    document.getElementById("mc-button-uwu").innerText = "(enabled) uwu";
+  } else {
+    document.getElementById("mc-button-uwu").innerText = "(disabled) uwu";
+  }
   //if (settings.detect_file_type) {
   //detect_file_type = true;
   //document.getElementById("mc-button-detectft").innerText = "(enabled) Detect file types";
@@ -246,6 +252,8 @@ function updateStg(setting) {
     settings.enter_send = !settings.enter_send;
   } else if (setting == "display_post_themes") {
     settings.display_post_themes = !settings.display_post_themes;
+  } else if (setting == "uwu") {
+    settings.uwu = !settings.uwu;
   }
   localStorage.setItem("beardeer:settings", JSON.stringify(settings));
   stgsTriggers();
@@ -1207,7 +1215,15 @@ function sendPost() {
     ws.send(
       JSON.stringify({
         command: "post",
-        content: content,
+        content:
+          settings.uwu ?
+            content
+              .replace(/(?:r|l)/g, "w")
+              .replace(/(?:R|L)/g, "W")
+              .replace(/n([aeiou])/g, "ny$1")
+              .replace(/N([aeiou])/g, "Ny$1")
+              .replace(/ove/g, "uv")
+          : content,
         replies: replies.map((reply) => reply._id),
         attachments: attachments,
       }),
