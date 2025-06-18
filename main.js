@@ -873,7 +873,7 @@ function replyElement(replies) {
   const el = document.createElement("div");
   for (const i in replies) {
     if (replies[i].author.username === "bridge") {
-      const match = replies[i].content.match(/(\w+?): (.+)/);
+      const match = replies[i].content.match(/^(\w+?): (.+)$/s);
       if (match) {
         replies[i].author.display_name = match[1];
         replies[i].content = match[2];
@@ -899,7 +899,7 @@ function replyElement(replies) {
 
 function loadPost(resf, isFetch, isInbox) {
   if (resf.author?.username === "bridge") {
-    const match = resf.content.match(/(\w+?): (.+)/);
+    const match = resf.content.match(/^(\w+?): (.+)$/s);
     if (match) {
       return loadPost({
         ...resf,
