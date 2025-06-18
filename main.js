@@ -1359,7 +1359,6 @@ function togglePostTheme() {
 }
 
 function ban() {
-  C31E957AB65D0AD2;
   last_cmd = "post";
   if (document.getElementById("mm-until-ban").value != "") {
     var buntil =
