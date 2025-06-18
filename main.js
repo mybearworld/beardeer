@@ -989,6 +989,16 @@ function loadPost(resf, isFetch, isInbox) {
     } else {
       avatar.src = "assets/default.png";
     }
+    if (resf.author?.username === "bridge") {
+      fetch(
+        `https://meower-thing-dont-actually-use-pls.goog-search.eu.org/users/${resf.author.display_name}`,
+      )
+        .then((s) => s.json())
+        .then((profile) => {
+          if (!profile.avatar) return;
+          avatar.src = `https://meow-uploads.goog-search.eu.org/icons/${profile.avatar}`;
+        });
+    }
     avatar.setAttribute("onerror", "this.src = 'assets/default.png';");
     avatar.setAttribute(
       "onclick",
