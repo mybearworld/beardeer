@@ -534,14 +534,32 @@ ws.onmessage = function (event) {
     const idocument = /** @type {HTMLIFrameElement} */ (
       document.getElementById("ud-iframe")
     ).contentDocument;
-    const mainStyles = idocument.getElementById("ud-main-styles");
-    mainStyles.innerHTML = "";
-    document.querySelectorAll("link[rel=stylesheet]").forEach((link) => {
-      const link2 = idocument.createElement("link");
-      link2.setAttribute("rel", "stylesheet");
-      link2.setAttribute("href", link.href);
-      mainStyles.append(link2);
-    });
+    fetch(document.querySelector("#top-style").href)
+      .then((response) => response.text())
+      .then((style) => {
+        idocument.getElementById("ud-main-style").innerHTML = style;
+        requestAnimationFrame(() => {
+          const btn = idocument.querySelector("button");
+          btn.style.display = "inline-block";
+          const styles = getComputedStyle(btn);
+          document.querySelectorAll("#ud-row button").forEach((button) => {
+            button.style.background = styles.background;
+            button.style.color = styles.color;
+            button.style.font = styles.font;
+            button.style.fontSize = "";
+            button.style.borderWidth = styles.borderWidth;
+            button.style.borderStyle = styles.borderStyle;
+            button.style.borderColor = styles.borderColor;
+            button.style.borderImage = styles.borderImage;
+            button.style.boxShadow = styles.boxShadow;
+          });
+          requestAnimationFrame(() => {
+            idocument.querySelector("#button-padding").style.height =
+              document.querySelector("#ud-row").clientHeight + 8 + "px";
+            btn.style.display = "none";
+          });
+        });
+      });
     var bio;
     idocument.getElementById("ud-d-tags").innerHTML = "";
     if (incoming.user.profile?.bio == "") {

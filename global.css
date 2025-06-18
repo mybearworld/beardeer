@@ -230,7 +230,9 @@ button.barney.barney-steam {
   position: absolute;
   top: 8px;
   left: 8px;
-  height: 42px;
+}
+#ud-row button {
+  margin: 0;
 }
 #user-display:not(.hidden) #ud-iframe {
   border: none;
