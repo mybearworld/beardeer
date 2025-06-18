@@ -1252,6 +1252,16 @@ async function translatepost(id, post) {
   }
 }
 
+const uwuify = (content) =>
+  settings.uwu ?
+    content
+      .replace(/(?:r|l)/g, "w")
+      .replace(/(?:R|L)/g, "W")
+      .replace(/n([aeiou])/g, "ny$1")
+      .replace(/N([aeiou])/g, "Ny$1")
+      .replace(/ove/g, "uv")
+  : content;
+
 function sendPost() {
   if (!editing) {
     last_cmd = "post";
@@ -1264,15 +1274,7 @@ function sendPost() {
     ws.send(
       JSON.stringify({
         command: "post",
-        content:
-          settings.uwu ?
-            content
-              .replace(/(?:r|l)/g, "w")
-              .replace(/(?:R|L)/g, "W")
-              .replace(/n([aeiou])/g, "ny$1")
-              .replace(/N([aeiou])/g, "Ny$1")
-              .replace(/ove/g, "uv")
-          : content,
+        content: uwuify(content),
         replies: replies.map((reply) => reply._id),
         attachments: attachments,
       }),
@@ -1553,7 +1555,9 @@ function editpost(id) {
       content = content.replaceAll(i, text_replacements[i]);
     }
   }
-  ws.send(JSON.stringify({ command: "edit_post", id: id, content: content }));
+  ws.send(
+    JSON.stringify({ command: "edit_post", id: id, content: uwuify(content) }),
+  );
   document.getElementById("ms-msg").value = "";
   attachments = [];
   replies = [];
