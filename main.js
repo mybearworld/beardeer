@@ -1257,8 +1257,9 @@ const uwuify = (content) =>
     content
       .replace(/(?:r|l)/g, "w")
       .replace(/(?:R|L)/g, "W")
-      .replace(/n([aeiou])/g, "ny$1")
+      .replace(/n([AEIOUaeiou])/g, "ny$1")
       .replace(/N([aeiou])/g, "Ny$1")
+      .replace(/N([AEIOU])/g, "NY$1")
       .replace(/ove/g, "uv")
   : content;
 
