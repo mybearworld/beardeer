@@ -872,6 +872,13 @@ function replyElement(replies) {
   if (!replies || replies.length === 0) return "";
   const el = document.createElement("div");
   for (const i in replies) {
+    if (replies[i].author.username === "bridge") {
+      const match = replies[i].content.match(/(\w+?): (.+)/);
+      if (match) {
+        replies[i].author.display_name = match[1];
+        replies[i].content = match[2];
+      }
+    }
     let reply_loaded = `→ ${hescape(replies[i].author.display_name)} (@${hescape(replies[i].author.username)}): `;
     let replyContent = document.createElement("span");
     replyContent.innerHTML = reply_loaded;
