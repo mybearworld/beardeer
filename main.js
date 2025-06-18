@@ -891,6 +891,20 @@ function replyElement(replies) {
 }
 
 function loadPost(resf, isFetch, isInbox) {
+  if (resf.author?.username === "bridge") {
+    const match = resf.content.match(/(\w+?): (.+)/);
+    if (match) {
+      return loadPost({
+        ...resf,
+        author: {
+          username: "bridge",
+          display_name: match[1],
+          avatar: "https://avatars.githubusercontent.com/u/77336943?s=200&v=4",
+        },
+        content: match[2],
+      });
+    }
+  }
   if (settings.debug) {
     console.log("Loading post " + resf._id);
   }
