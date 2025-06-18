@@ -1105,6 +1105,9 @@ function loadPost(resf, isFetch, isInbox) {
     settings.display_post_themes
   ) {
     post.style.background = resf.author.profile?.background || "";
+    if (resf.author.profile?.background) {
+      post.classList.add("has-bg");
+    }
     const match = resf.author.profile?.background?.match(
       /^#([a-f0-9][a-f0-9])([a-f0-9][a-f0-9])([a-f0-9][a-f0-9])/i,
     );
