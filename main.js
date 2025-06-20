@@ -1695,8 +1695,8 @@ function changePswd() {
   last_cmd = "change_password";
   ws.send(
     JSON.stringify({
-      command: "change_password",
-      password: document.getElementById("mc-pw-password").value,
+      command: "change_pswd",
+      current_password: document.getElementById("mc-pw-password").value,
       new_password: document.getElementById("mc-pw-new-password").value,
       listener: "pwAccountBossDeer",
     }),
