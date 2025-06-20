@@ -493,6 +493,50 @@ ws.onmessage = function (event) {
     }
   } else if (incoming.command == "edited_post") {
     editedpost(incoming._id, incoming.content);
+  } else if (incoming.command == "update_reactions") {
+    const reactionsElement = document.querySelector(
+      `[id="${incoming._id}"] .reactions`,
+    );
+    if (!reactionsElement) return;
+    reactionsElement.querySelectorAll("[data-emoji]").forEach((el) => {
+      if (!(el.dataset.emoji in incoming.reactions)) el.remove();
+    });
+    Object.entries(incoming.reactions).forEach(([emoji, authors]) => {
+      const element = reactionsElement.querySelector(`[data-emoji=${emoji}]`);
+      if (element) {
+        if (authors.length === 0) element.delete();
+        else {
+          element.querySelector(".count").textContent = authors.length;
+          element.classList.toggle(
+            "reaction-author",
+            authors.includes(username),
+          );
+          element.title = authors.join(", ");
+        }
+      } else {
+        if (authors.length === 0) return;
+        const element = document.createElement("button");
+        element.dataset.emoji = emoji;
+        element.title = authors.join(", ");
+        if (authors.includes(username))
+          element.classList.add("reaction-author");
+        element.append(emoji);
+        const count = document.createElement("span");
+        count.classList.add("count");
+        count.textContent = authors.length;
+        element.append(count);
+        reactionsElement.append(element);
+        element.addEventListener("click", () => {
+          ws.send(
+            JSON.stringify({
+              command: "toggle_reaction",
+              id: incoming._id,
+              emoji: emoji,
+            }),
+          );
+        });
+      }
+    });
   } else if (last_cmd == "gen_invite" && "invite_code" in incoming) {
     document.getElementById("mm-invite-code").innerText =
       `Your invite code is "${incoming.invite_code}". Use it on any SoktDeer client to sign up!\nhttps://soktdeer.com/\n\nCodes: ${incoming.invite_codes}`;
@@ -926,64 +970,6 @@ function loadPost(resf, isFetch, isInbox) {
     console.log("Loading post " + resf._id);
   }
 
-  const reactionMatch = resf.content.match(
-    /^Reaction: (\p{Emoji_Presentation})$/u,
-  );
-  if (reactionMatch && resf.replies.length === 1) {
-    const emoji = reactionMatch[1];
-    const reactions = document.querySelector(
-      `[id="${resf.replies[0]._id}"] .reactions`,
-    );
-    if (!reactions) return;
-    let reactionEl = reactions.querySelector(`[data-emoji=${emoji}]`);
-    if (reactionEl?.hasAttribute(`data-has-reacted-${resf.author.username}`)) {
-      return;
-    }
-    if (!reactionEl) {
-      reactionEl = document.createElement("button");
-      if (resf.author.username === username) {
-        reactionEl.classList.add("reaction-author");
-      }
-      reactionEl.addEventListener("click", () => {
-        if (reactionEl.hasAttribute("data-reaction-post-author")) {
-          last_cmd = "delete_post";
-          ws.send(
-            JSON.stringify({
-              command: "delete_post",
-              id: reactionEl.getAttribute("data-reaction-post-author"),
-            }),
-          );
-        } else {
-          ws.send(
-            JSON.stringify({
-              command: "post",
-              content: `Reaction: ${reactionEl.dataset.emoji}`,
-              replies: [resf.replies[0]._id],
-              attachments: [],
-            }),
-          );
-        }
-      });
-      reactionEl.dataset.emoji = emoji;
-      const reactionEmojiEl = document.createElement("span");
-      reactionEmojiEl.textContent = emoji;
-      reactionEl.append(reactionEmojiEl);
-      const reactionCountEl = document.createElement("span");
-      reactionCountEl.classList.add("count");
-      reactionCountEl.textContent = "0";
-      reactionEl.append(reactionCountEl);
-      reactions.append(reactionEl);
-    }
-    reactionEl.setAttribute(`data-reaction-post-${resf._id}`, "");
-    reactionEl.setAttribute(`data-has-reacted-${resf.author.username}`, "");
-    if (resf.author.username === username) {
-      reactionEl.setAttribute(`data-reaction-post-author`, resf._id);
-      reactionEl.classList.add("reaction-author");
-    }
-    reactionEl.querySelector(".count").textContent++;
-    return;
-  }
-
   var sts = new Date(resf.created * 1000).toLocaleString();
   var replies_loaded = replyElement(resf.replies);
 
@@ -1155,6 +1141,29 @@ function loadPost(resf, isFetch, isInbox) {
 
   const reactions = document.createElement("div");
   reactions.classList.add("reactions");
+  if (!resf.reactions) resf.reactions = {};
+  Object.entries(resf.reactions).forEach(([emoji, author]) => {
+    if (author.length === 0) return;
+    const element = document.createElement("button");
+    element.dataset.emoji = emoji;
+    element.title = author.join(", ");
+    if (author.includes(username)) element.classList.add("reaction-author");
+    element.append(emoji);
+    const count = document.createElement("span");
+    count.classList.add("count");
+    count.textContent = author.length;
+    element.append(count);
+    reactions.append(element);
+    element.addEventListener("click", () => {
+      ws.send(
+        JSON.stringify({
+          command: "toggle_reaction",
+          id: resf._id,
+          emoji,
+        }),
+      );
+    });
+  });
   post.append(reactions);
 
   var postboxid;
@@ -1223,24 +1232,11 @@ function loadPost(resf, isFetch, isInbox) {
 function reactpost(id) {
   const emoji = prompt("What emoji do you want to react with?");
   if (!emoji) return;
-  if (!/^\p{Emoji_Presentation}$/u.test(emoji)) {
-    alert("That's not an emoji.");
-    return;
-  }
-  if (
-    document.querySelector(
-      `[id="${id}"] .reactions .reaction-author[data-emoji="${emoji}"]`,
-    )
-  ) {
-    alert("You already reacted with that emoji.");
-    return;
-  }
   ws.send(
     JSON.stringify({
-      command: "post",
-      content: `Reaction: ${emoji}`,
-      replies: [id],
-      attachments: [],
+      command: "toggle_reaction",
+      emoji,
+      id,
     }),
   );
 }
@@ -1600,17 +1596,6 @@ function removepost(id, dba) {
       repliesMade[x].innerText = `→ post deleted`;
     }
   } catch {}
-  document.querySelectorAll(`[data-reaction-post-${id}]`).forEach((r) => {
-    const count = r.querySelector(".count");
-    count.textContent--;
-    r.removeAttribute(`data-reaction-post-${id}`);
-    if (count.textContent === "0") {
-      r.remove();
-    } else if (r.dataset.reactionPostAuthor === id) {
-      r.removeAttribute(`data-reaction-post-author`);
-      r.classList.remove("reaction-author");
-    }
-  });
 }
 
 function editedpost(id, content) {
