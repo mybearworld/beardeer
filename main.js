@@ -144,6 +144,7 @@ const settings_template = {
   upload_service: "",
   enter_send: true,
   display_post_themes: true,
+  melon_cat: true,
   uwu: false,
 };
 
@@ -199,6 +200,13 @@ function stgsTriggers() {
     document.getElementById("mc-button-display-post-themes").innerText =
       "(disabled) Display post themes by default";
   }
+  if (settings.melon_cat) {
+    document.getElementById("mc-button-melon-cat").innerText =
+      "(enabled) Show melon cat for users who enabled it";
+  } else {
+    document.getElementById("mc-button-melon-cat").innerText =
+      "(disabled) Show melon cat for users who enabled it";
+  }
   if (settings.uwu) {
     document.getElementById("mc-button-uwu").innerText = "(enabled) uwu";
   } else {
@@ -252,6 +260,8 @@ function updateStg(setting) {
     settings.enter_send = !settings.enter_send;
   } else if (setting == "display_post_themes") {
     settings.display_post_themes = !settings.display_post_themes;
+  } else if (setting == "melon_cat") {
+    settings.melon_cat = !settings.melon_cat;
   } else if (setting == "uwu") {
     settings.uwu = !settings.uwu;
   }
@@ -1161,7 +1171,13 @@ function loadPost(resf, isFetch, isInbox) {
     blocked_theme_users[resf.author.username] ??
     settings.display_post_themes
   ) {
-    post.style.background = resf.author.profile?.background || "";
+    post.style.background =
+      (settings.melon_cat ?
+        resf.author.profile?.background
+      : resf.author.profile?.background?.replace(
+          "https://u.cubeupload.com/shreder95ua/kittywatermelon.gif",
+          "",
+        )) || "";
     if (resf.author.profile?.background) {
       post.classList.add("has-bg");
     }
