@@ -483,6 +483,7 @@ ws.onmessage = function (event) {
     if (posts_list) {
       posts_list.splice(0, 0, incoming.data);
     }
+    𐂂;
     if (authed || guest) {
       loadPost(incoming.data, false, false);
     }
@@ -1184,7 +1185,7 @@ function loadPost(resf, isFetch, isInbox) {
       (settings.melon_cat ?
         resf.author.profile?.background
       : resf.author.profile?.background?.replace(
-          "https://u.cubeupload.com/shreder95ua/kittywatermelon.gif",
+          /https?:\/\/u.cubeupload.com\/shreder95ua\/kittywatermelon.gif/g,
           "",
         )) || "";
     if (resf.author.profile?.background) {
