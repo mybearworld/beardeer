@@ -483,7 +483,6 @@ ws.onmessage = function (event) {
     if (posts_list) {
       posts_list.splice(0, 0, incoming.data);
     }
-    𐂂;
     if (authed || guest) {
       loadPost(incoming.data, false, false);
     }
