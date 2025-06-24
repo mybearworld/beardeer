@@ -465,10 +465,12 @@ hr {
   background-color: var(--deer-button-hover);
   color: var(--deer-foreground);
 }
-.post.has-bg {
+.post.has-bg,
+.post.has-bg a {
   color: white;
 }
-.light-bg.post {
+.light-bg.post,
+.light-bg.post a {
   color: black;
 }
 .pfp {
