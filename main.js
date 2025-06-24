@@ -1186,7 +1186,7 @@ function loadPost(resf, isFetch, isInbox) {
       (settings.melon_cat ?
         resf.author.profile?.background
       : resf.author.profile?.background?.replace(
-          /https?:\/\/u.cubeupload.com\/shreder95ua\/kittywatermelon.gif/g,
+          /https?:\/\/u.cubeupload.com\/shreder95ua\/(?:kittywatermelon|MgRGzT).gif/g,
           "",
         )) || "";
     if (resf.author.profile?.background) {
