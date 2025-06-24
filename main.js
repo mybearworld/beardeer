@@ -572,6 +572,8 @@ ws.onmessage = function (event) {
     document.getElementById("mc-lastfm").value = incoming.user.profile?.lastfm;
     document.getElementById("mc-background").value =
       incoming.user.profile?.background || "";
+    document.getElementById("mc-background-alt").value =
+      incoming.user.profile?.["background-alt"] || "";
     document.getElementById("mc-border-top").value =
       incoming.user.profile["border-top"] || "";
     document.getElementById("mc-border-bottom").value =
@@ -1190,12 +1192,15 @@ function loadPost(resf, isFetch, isInbox) {
     if (resf.author.profile?.background) {
       post.classList.add("has-bg");
     }
-    const match = resf.author.profile?.background?.match(
-      /^#([a-f0-9][a-f0-9])([a-f0-9][a-f0-9])([a-f0-9][a-f0-9])/i,
-    );
-    const match2 = resf.author.profile?.background?.match(
-      /^#([a-f0-9])([a-f0-9])([a-f0-9])/i,
-    );
+    const hexRegex =
+      /^#([a-f0-9][a-f0-9])([a-f0-9][a-f0-9])([a-f0-9][a-f0-9])$/i;
+    const shortHexRegex = /^#([a-f0-9])([a-f0-9])([a-f0-9])$/i;
+    const match =
+      resf.author.profile?.background?.match(hexRegex) ??
+      resf.author.profile?.["background-alt"]?.match(hexRegex);
+    const match2 =
+      resf.author.profile?.background?.match(shortHexRegex) ??
+      resf.author.profile?.["background-alt"]?.match(shortHexRegex);
     if (match || match2) {
       const r = parseInt(match?.[1] || match2[1], 16);
       const b = parseInt(match?.[2] || match2[2], 16);
@@ -1407,18 +1412,24 @@ function populateProfileSettings() {
 }
 
 function setProperty(property, overridenValue /* optional */) {
-  last_cmd = `set_${property}`;
+  last_cmd = `set_${property.replace(/!/g, "-")}`;
   let value =
     overridenValue ??
-    document.getElementById(`mc-${property.replace(/_/g, "-")}`).value;
+    document.getElementById(`mc-${property.replace(/[_!]/g, "-")}`).value;
   if (property === "bio" && replace_text) {
     for (const i in text_replacements) {
       value = value.replaceAll(i, text_replacements[i]);
     }
   }
-  ws.send(JSON.stringify({ command: "set_property", property, value }));
+  ws.send(
+    JSON.stringify({
+      command: "set_property",
+      property: property.replace(/!/g, "-"),
+      value,
+    }),
+  );
   if (overridenValue !== undefined) {
-    document.getElementById(`mc-${property.replace(/_/g, "-")}`).value =
+    document.getElementById(`mc-${property.replace(/[_!]/g, "-")}`).value =
       overridenValue;
   }
 }
