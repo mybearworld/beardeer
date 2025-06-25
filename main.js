@@ -762,6 +762,7 @@ const clientIcon = (c) =>
   : c.startsWith("whitetail") ? "🦨"
   : c.startsWith("CiaoTk") ? "⚽"
   : c.startsWith("neuoClient") ? "🔵"
+  : c.startsWith("Soupdeer") ? "🍲"
   : c === "Unknown" ? "❓"
   : "🤖";
 
