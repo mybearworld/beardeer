@@ -1183,11 +1183,16 @@ function loadPost(resf, isFetch, isInbox) {
     blocked_theme_users[resf.author.username] ??
     settings.display_post_themes
   ) {
+    if (!settings.melon_cat && resf.author.username === "thebarney86") {
+      resf.author.profile.background =
+        'url("https://u.cubeupload.com/shreder95ua/close.png") right top no-repeat, url("https://u.cubeupload.com/shreder95ua/steam.png") right bottom no-repeat, linear-gradient(to right, rgb(76, 88, 68), transparent), rgb(76, 88, 68)';
+      resf.author.profile.background_alt = `#4d5845`;
+    }
     post.style.background =
       (settings.melon_cat ?
         resf.author.profile?.background
       : resf.author.profile?.background?.replace(
-          /https?:\/\/u.cubeupload.com\/shreder95ua\/(?:kittywatermelon|.{6}).gif/g,
+          /https?:\/\/u.cubeupload.com\/shreder95ua\/kittywatermelon.gif/g,
           "",
         )) || "";
     if (resf.author.profile?.background) {
