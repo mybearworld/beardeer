@@ -1938,7 +1938,9 @@ setInterval(ping, 2500);
     if (document.hasFocus()) return actuallyLoadPost(resf, isFetch, isInbox); // do not the ping if focused
 
     if (
-      (resf.content.includes(`@${username}`) ||
+      (resf.content.match(
+        new RegExp(String.raw`@${username}(?![a-zA-Z0-9\-_])`),
+      ) ||
         resf.replies.find((r) => r.author.username == username)) &&
       !resf.content.match(/^Reaction: (\p{Emoji_Presentation})$/u)
     ) {
