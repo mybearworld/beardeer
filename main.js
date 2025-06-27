@@ -1049,7 +1049,7 @@ function loadPost(resf, isFetch, isInbox) {
     postDetails.innerHTML = `${sts} - <span class="text-clickable" onclick="reply(${hescape(JSON.stringify(resf))});">Reply</span>`;
   }
   if (resf.author?.username == username) {
-    postDetails.innerHTML += ` - <span class="text-clickable" onclick="editer('${hescape(resf._id)}', ${hescape(JSON.stringify(resf.content))});">Edit</span>`;
+    postDetails.innerHTML += ` - <span class="text-clickable" onclick="editer('${hescape(resf._id)}')">Edit</span>`;
   }
   if ((resf.author?.username == username || delete_all) && !isInbox) {
     postDetails.innerHTML += ` - <span class="text-clickable" onclick="deletepost(${hescape(JSON.stringify(resf._id))});">Delete</span>`;
@@ -1617,6 +1617,7 @@ function removepost(id, dba) {
 }
 
 function editedpost(id, content) {
+  if (posts[id]) posts[id].content = content;
   try {
     document.getElementById("content-" + id).innerHTML = emojify(
       md.render(content),
