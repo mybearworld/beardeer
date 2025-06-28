@@ -975,6 +975,15 @@ function loadPost(resf, isFetch, isInbox) {
   }
 
   var sts = new Date(resf.created * 1000).toLocaleString();
+  if (resf.author?.username in timeZones) {
+    sts +=
+      " (locally " +
+      new Intl.DateTimeFormat([], {
+        timeStyle: "medium",
+        timeZone: timeZones[resf.author.username],
+      }).format(resf.created * 1000) +
+      ")";
+  }
   var replies_loaded = replyElement(resf.replies);
 
   var post = document.createElement("div");
