@@ -91,6 +91,7 @@ let text_replacements = {
 };
 
 const timeZones = {
+  0: "Europe/London",
   cole: "America/Detroit",
   delusions: "Europe/London",
   engineerrunner: "Europe/London",
