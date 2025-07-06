@@ -14,6 +14,7 @@ const md = markdownit({
   breaks: true,
   image: false, // i dont remember typing this
 }).disable("image");
+md.use(katex, { throwOnError: false });
 
 const hescape = (s) =>
   s ?
