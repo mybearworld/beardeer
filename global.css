@@ -225,6 +225,9 @@ button.barney.barney-steam {
   margin-top: 1px;
   border: 2px solid;
 }
+#user-display {
+  overflow: hidden;
+}
 #user-display:not(.hidden) #ud-row {
   z-index: 1;
   position: absolute;
@@ -286,6 +289,12 @@ button.barney.barney-steam {
   word-break: break-word;
   overflow-wrap: break-word;
   box-sizing: border-box;
+  overflow: auto;
+  position: relative;
+}
+#ud-bio-container .title {
+  position: sticky;
+  left: 0;
 }
 #ud-bio p {
   padding: 0;
