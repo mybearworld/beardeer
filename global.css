@@ -36,8 +36,8 @@
 }
 
 body {
-  font-family: "Noto Sans", sans-serif, serif, "Noto Color Emoji",
-    "sitelen seli kiwen";
+  font-family:
+    "Noto Sans", sans-serif, serif, "Noto Color Emoji", "sitelen seli kiwen";
   margin: 0px;
 }
 pre {
@@ -522,6 +522,9 @@ a {
 }
 .post-content table {
   border-collapse: collapse;
+}
+.post-content th:empty {
+  display: none;
 }
 .post-content th,
 .post-content td {
