@@ -134,6 +134,26 @@ hr {
 .hidden {
   display: none;
 }
+.frogwrapper {
+  vertical-align: top;
+  display: inline-block;
+  position: relative;
+}
+.frog {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: filter;
+  animation: hueshift 60s infinite linear;
+}
+@keyframes hueshift {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
 #ms-posts,
 #ml-posts {
   display: flex;
