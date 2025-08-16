@@ -96,12 +96,12 @@ const timeZones = {
   cole: "America/Detroit",
   delusions: "Europe/London",
   engineerrunner: "Europe/London",
+  legoshi: "America/Detroit",
   mybearworld: "Europe/Berlin",
   noodles: "-05:00",
   notfenixio: "Europe/Madrid",
   pix: "America/Detroit",
   pkmnq: "+08:00",
-  stripes: "America/Detroit",
   wlodekm: "Europe/Kyiv",
 };
 
@@ -807,9 +807,9 @@ function updateUlist() {
     }
   } else {
     document.getElementById("ms-ulist").innerHTML =
-      `${ulist.length} users online (${ulstring})`;
+      `${ulist.length} users... uhh... well, you can't really call whatever this is "online", so, uh, ${ulist.length} users alive somewhere, probably (${ulstring})`;
     document.getElementById("ml-ulist").innerHTML =
-      `${ulist.length} users online (${ulstring})`;
+      `${ulist.length} users... uhh... well, you can't really call whatever this is "online", so, uh, ${ulist.length} users alive somewhere, probably (${ulstring})`;
   }
 }
 
